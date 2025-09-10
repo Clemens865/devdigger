@@ -1,23 +1,42 @@
 # DevDigger 🔍
 
-> A powerful local knowledge management system that transforms web documentation into your personal, searchable knowledge base. Built with Electron, React, and AI-powered semantic search.
+> Enterprise-grade local knowledge management with advanced RAG search, neural reranking, and system-wide document indexing. Features multi-stage retrieval pipelines, cross-encoder models, and intelligent caching for blazing-fast semantic search.
 
 ![DevDigger](https://img.shields.io/badge/version-1.0.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey)
+![Search](https://img.shields.io/badge/search-RAG%20Pipeline-orange)
+![Neural](https://img.shields.io/badge/neural-Cross--Encoder-purple)
 
 ## 🌟 Overview
 
-DevDigger is inspired by the concept of a "digital archaeologist" - it excavates, processes, and preserves web documentation into a searchable knowledge base that works entirely offline. Perfect for developers who want to maintain their own curated library of technical documentation, code examples, and learning resources.
+DevDigger is inspired by the concept of a "digital archaeologist" - it excavates, processes, and preserves web documentation into a searchable knowledge base that works entirely offline. Now enhanced with enterprise-grade search capabilities that rival commercial solutions.
 
-### Key Features
+### ✨ Key Features
 
 - 🕷️ **Smart Web Crawling**: Intelligently crawls and extracts content from documentation sites
-- 🧠 **AI-Powered Search**: Semantic search using embeddings for finding relevant content
+- 🧠 **Advanced RAG Pipeline**: Multi-stage retrieval with 20+ specialized search stages
+- 🎯 **Neural Reranking**: Cross-encoder transformer models (MS MARCO MiniLM) for precision
+- ⚡ **Intelligent Caching**: LRU memory cache (10,000 embeddings) with semantic similarity matching
+- 🔍 **Hybrid Search**: Combines BM25 keyword search with vector embeddings
 - 💾 **Local-First**: All data stored locally in SQLite - works offline, no cloud dependencies
-- 🔍 **Code Extraction**: Automatically identifies and indexes code examples
-- 🌐 **Global CLI Access**: Search your knowledge base from any project directory
+- 🌐 **System-Wide Search**: Search across your entire document system with Claude integration
+- 🚀 **Performance Optimized**: 200ms fast mode, automatic background persistence
 - 🤖 **Claude Code Integration**: Seamlessly integrates with Claude Code for AI-assisted development
+
+### 🎯 Advanced Search Features
+
+#### Multi-Stage RAG Pipeline Profiles
+- **Fast Mode**: 4 stages, 200ms target - Quick results for interactive use
+- **Balanced Mode**: 6 stages, 500ms target - Good accuracy/speed trade-off
+- **Accurate Mode**: 9 stages, 1-2s - Maximum quality with comprehensive search
+- **Research Mode**: 9 stages with expansion - Deep analysis with citation following
+
+#### Intelligent Caching System
+- Semantic similarity matching for fuzzy cache hits (95%+ similarity)
+- TTL management: 24h embeddings, 5min queries, 30min documents
+- Compressed disk storage with binary serialization
+- Automatic background persistence every 5 minutes
 
 ## 🏗️ Architecture
 
