@@ -9,6 +9,7 @@ import { RealtimeServer } from './services/realtimeServer';
 import { WorkerManager } from './services/workerManager';
 import { createSettingsWindow } from './settingsWindow';
 import { DatabaseMaintenanceService } from './services/databaseMaintenance';
+import { EnhancedSearchSystem } from './services/enhancedSearchSystem';
 
 let mainWindow: BrowserWindow | null = null;
 let database: DatabaseService;
@@ -17,6 +18,7 @@ let embedding: EmbeddingService;
 let vectorDb: VectorDatabaseService;
 let realtimeServer: RealtimeServer;
 let workerManager: WorkerManager;
+let enhancedSearchSystem: EnhancedSearchSystem | null = null;
 
 // Helper function to chunk text
 function chunkText(text: string, maxChunkSize: number = 4000): string[] {
@@ -196,6 +198,39 @@ function setupIpcHandlers() {
 
   ipcMain.handle('db:semanticSearch', async (_, embedding: number[], options?: any) => {
     return database.semanticSearch(embedding, options);
+  });
+
+  // Enhanced Search Handlers
+  ipcMain.handle('search:enhanced', async (_, query: string, options?: any) => {
+    if (!enhancedSearchSystem) {
+      enhancedSearchSystem = EnhancedSearchSystem.getInstance(
+        database,
+        vectorDb,
+        embedding,
+        { enableCache: true, enableCrossEncoder: true, enableContextualEmbeddings: true }
+      );
+      await enhancedSearchSystem.initialize();
+    }
+    return enhancedSearchSystem.search(query, options);
+  });
+
+  ipcMain.handle('search:stats', async () => {
+    if (enhancedSearchSystem) {
+      return enhancedSearchSystem.getStatistics();
+    }
+    return null;
+  });
+
+  ipcMain.handle('search:clearCache', async () => {
+    if (enhancedSearchSystem) {
+      await enhancedSearchSystem.clearCaches();
+    }
+  });
+
+  ipcMain.handle('search:rebuildIndex', async () => {
+    if (enhancedSearchSystem) {
+      await enhancedSearchSystem.rebuildIndices();
+    }
   });
 
   ipcMain.handle('db:getSources', async (_, type?: string) => {

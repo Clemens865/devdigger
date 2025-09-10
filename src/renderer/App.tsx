@@ -5,6 +5,7 @@ import ExplorePage from './pages/ExplorePage';
 import SearchPage from './pages/SearchPage';
 import CollectionsPage from './pages/CollectionsPage';
 import SettingsPage from './pages/SettingsPage';
+import DevDiggerLogo from '../assets/devdigger-Icon.png';
 import './styles/gallery.css';
 
 type Page = 'mine' | 'explore' | 'search' | 'archive' | 'settings';
@@ -43,7 +44,18 @@ function App() {
       <header className="gallery-header">
         <div className="container" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 2rem' }}>
           <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div className="gallery-logo">DevDigger</div>
+            <div className="gallery-logo" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <img 
+                src={DevDiggerLogo} 
+                alt="DevDigger Logo" 
+                style={{ 
+                  width: '48px', 
+                  height: '48px',
+                  filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
+                }} 
+              />
+              <span>DevDigger</span>
+            </div>
             
             <ul className="gallery-nav">
               {navigation.map((item) => (

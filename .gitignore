@@ -43,6 +43,7 @@ temp/
 
 # Claude Flow generated files
 .claude/settings.local.json
+.claude/settings.local 2.json
 .mcp.json
 claude-flow.config.json
 .swarm/
@@ -65,3 +66,10 @@ claude-flow
 claude-flow.bat
 claude-flow.ps1
 hive-mind-prompt-*.txt
+
+# Test files
+test-*.js
+test-*.ts
+
+# System metrics (auto-generated)
+.claude-flow/metrics/

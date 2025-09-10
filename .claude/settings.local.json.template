@@ -1,0 +1,52 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__ruv-swarm",
+      "mcp__claude-flow",
+      "Read(//{YOUR_USERNAME}/Documents/**)",
+      "Bash(npm init:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm run postinstall:*)",
+      "Read(//{YOUR_USERNAME}/Library/**)",
+      "Bash(sqlite3:*)",
+      "Bash(pkill:*)",
+      "Bash(chmod:*)",
+      "Bash(./devdigger-cli stats)",
+      "Bash(npm rebuild:*)",
+      "Bash(npm run build:*)",
+      "WebSearch",
+      "Bash(killall:*)",
+      "Bash(lsof:*)",
+      "Bash(./devdigger-cli --help)",
+      "Bash(./devdigger-cli crawl:*)",
+      "Bash(./devdigger-cli sources)",
+      "Bash(node:*)",
+      "Bash(./test-system.sh:*)",
+      "Bash(./devdigger-cli search:*)",
+      "Bash(./devdigger-cli clean:*)",
+      "Bash(npm link:*)",
+      "Bash(devdigger stats:*)",
+      "Read(//private/tmp/**)",
+      "Bash(devdigger search:*)",
+      "Bash(devdigger code:*)",
+      "Read(//{YOUR_USERNAME}/**)",
+      "Bash(source:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(npm run typecheck:*)",
+      "Bash(osascript:*)",
+      "Bash(npm uninstall:*)"
+    ],
+    "deny": []
+  },
+  "enabledMcpjsonServers": [
+    "claude-flow",
+    "ruv-swarm"
+  ],
+  "enableAllProjectMcpServers": true
+}

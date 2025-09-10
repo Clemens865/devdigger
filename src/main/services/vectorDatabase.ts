@@ -35,7 +35,6 @@ export class VectorDatabaseService {
         await this.index.createIndex({
           version: 1,
           deleteIfExists: false,
-          dimensions: 768,
           metricType: 'cosine'
         });
         console.log('Vector index created successfully');
@@ -77,13 +76,19 @@ export class VectorDatabaseService {
       }
     }));
 
-    await this.index.insertItems(items);
+    // insertItems is deprecated, use insertItem for each item
+    for (const item of items) {
+      await this.index.insertItem(item);
+    }
   }
 
   async search(queryVector: number[], limit: number = 10) {
     if (!this.index) throw new Error('Vector index not initialized');
     
-    const results = await this.index.queryItems(queryVector, limit);
+    const results = await this.index.queryItems({
+      vector: queryVector,
+      topK: limit
+    });
     
     return results.map(result => ({
       id: result.item.id,
