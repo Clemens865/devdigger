@@ -1,0 +1,136 @@
+# Claude Flow DevDigger Integration
+# This configuration enables Claude to use your DevDigger knowledge base
+
+name: devdigger-knowledge
+version: 1.0.0
+description: DevDigger local knowledge base integration
+
+# Custom tools for Claude
+tools:
+  - name: devdigger_search
+    description: Search DevDigger for documentation and knowledge
+    command: ./devdigger-cli search
+    parameters:
+      query:
+        type: string
+        required: true
+        description: Search query
+      limit:
+        type: number
+        default: 5
+        description: Number of results
+    output: text
+
+  - name: devdigger_code
+    description: Find code examples in DevDigger
+    command: ./devdigger-cli code
+    parameters:
+      language:
+        type: string
+        required: false
+        description: Programming language filter
+      limit:
+        type: number
+        default: 10
+    output: text
+
+  - name: devdigger_context
+    description: Get relevant context for a question
+    command: ./devdigger-cli claude-query
+    parameters:
+      query:
+        type: string
+        required: true
+    output: structured
+
+# Memory integration
+memory:
+  namespace: devdigger
+  persistence: true
+  hooks:
+    - on: task_start
+      action: |
+        # Load DevDigger context for relevant tasks
+        if [[ "$TASK_TYPE" == "code" || "$TASK_TYPE" == "research" ]]; then
+          ./devdigger-cli stats --format json > /tmp/devdigger-stats.json
+          echo "DevDigger knowledge base loaded: $(cat /tmp/devdigger-stats.json)"
+        fi
+
+# Workflow integrations
+workflows:
+  research_with_knowledge:
+    description: Research using DevDigger knowledge base
+    steps:
+      - name: Check existing knowledge
+        tool: devdigger_search
+        input: "{query}"
+      - name: Find code examples
+        tool: devdigger_code
+        when: step[0].has_results
+      - name: Generate answer
+        agent: researcher
+        context: step[0].output + step[1].output
+
+  code_with_examples:
+    description: Code generation with DevDigger examples
+    steps:
+      - name: Find similar code
+        tool: devdigger_code
+        input: 
+          language: "{language}"
+      - name: Get documentation
+        tool: devdigger_search
+        input: "{feature}"
+      - name: Generate code
+        agent: coder
+        context: step[0].output + step[1].output
+
+# Swarm configurations
+swarm:
+  knowledge_enhanced:
+    description: Swarm with DevDigger knowledge integration
+    strategy: development
+    agents:
+      - type: researcher
+        config:
+          pre_hook: ./devdigger-cli stats
+          knowledge_source: devdigger
+      - type: coder
+        config:
+          examples_source: devdigger
+      - type: tester
+        config:
+          test_patterns: devdigger
+
+# MCP Server configuration
+mcp:
+  servers:
+    - name: devdigger
+      type: http
+      url: http://localhost:3333
+      auth: none
+      endpoints:
+        search: /search
+        semantic_search: /semantic-search
+        code_examples: /code-examples
+        sources: /sources
+        stats: /stats
+
+# Aliases for quick access
+aliases:
+  dds: devdigger_search
+  ddc: devdigger_code
+  dda: devdigger_context
+
+# Environment variables
+env:
+  DEVDIGGER_DB: ~/Library/Application Support/devdigger/devdigger.db
+  DEVDIGGER_CLI: ./devdigger-cli
+
+# Auto-start services
+services:
+  - name: devdigger-mcp
+    command: node .claude/devdigger-mcp-server.js
+    port: 3333
+    auto_start: false
+    health_check: http://localhost:3333/health

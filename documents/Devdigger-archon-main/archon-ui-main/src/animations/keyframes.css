@@ -1,0 +1,507 @@
+/**
+ * DevDigger Animation System - CSS Keyframes
+ * 
+ * Comprehensive collection of CSS animations for sophisticated micro-interactions
+ * All animations are GPU-accelerated and respect motion preferences
+ */
+
+/* ============================================
+   CORE ANIMATIONS
+   ============================================ */
+
+/* Fade animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-20px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(20px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Scale animations */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 1);
+  }
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes scaleOut {
+  from {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+  to {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 1);
+  }
+}
+
+@keyframes pulseScale {
+  0%, 100% {
+    transform: scale3d(1, 1, 1);
+  }
+  50% {
+    transform: scale3d(1.05, 1.05, 1);
+  }
+}
+
+@keyframes gentlePulse {
+  0%, 100% {
+    transform: scale3d(1, 1, 1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale3d(1.02, 1.02, 1);
+    opacity: 0.9;
+  }
+}
+
+/* ============================================
+   MICRO-INTERACTIONS
+   ============================================ */
+
+/* Button animations */
+@keyframes buttonPress {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+  50% {
+    transform: scale3d(0.97, 0.97, 1);
+  }
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes buttonRipple {
+  0% {
+    transform: scale3d(0, 0, 1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale3d(4, 4, 1);
+    opacity: 0;
+  }
+}
+
+@keyframes magneticPull {
+  0% {
+    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  }
+  100% {
+    transform: translate3d(var(--magnetic-x, 0), var(--magnetic-y, 0), 0) scale3d(1.02, 1.02, 1);
+  }
+}
+
+/* Input field animations */
+@keyframes labelFloat {
+  from {
+    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+    color: var(--color-text-muted);
+  }
+  to {
+    transform: translate3d(0, -24px, 0) scale3d(0.85, 0.85, 1);
+    color: var(--color-primary);
+  }
+}
+
+@keyframes inputFocus {
+  from {
+    border-color: var(--color-border);
+    box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb), 0);
+  }
+  to {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
+  }
+}
+
+@keyframes inputError {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+/* Toggle animations */
+@keyframes toggleSlide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(var(--toggle-distance, 20px));
+  }
+}
+
+@keyframes checkboxCheck {
+  0% {
+    transform: scale3d(0, 0, 1) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale3d(1.1, 1.1, 1) rotate(45deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale3d(1, 1, 1) rotate(45deg);
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   LAYOUT ANIMATIONS
+   ============================================ */
+
+/* Modal animations */
+@keyframes modalBackdropIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(4px);
+  }
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 40px, 0) scale3d(0.95, 0.95, 1);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  }
+}
+
+@keyframes modalSlideDown {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, 40px, 0) scale3d(0.95, 0.95, 1);
+  }
+}
+
+/* Dropdown animations */
+@keyframes dropdownUnfurl {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -8px, 0) scale3d(0.95, 0.95, 1);
+    transform-origin: top;
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+    transform-origin: top;
+  }
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 4px, 0) scale3d(0.9, 0.9, 1);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  }
+}
+
+/* ============================================
+   DATA VISUALIZATIONS
+   ============================================ */
+
+/* Progress animations */
+@keyframes progressFill {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes progressPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Counter animations */
+@keyframes numberCount {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Chart animations */
+@keyframes barGrow {
+  from {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+  to {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+}
+
+@keyframes lineDrawIn {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pieSliceReveal {
+  from {
+    stroke-dasharray: 0 1000;
+  }
+  to {
+    stroke-dasharray: var(--arc-length, 100) 1000;
+  }
+}
+
+/* ============================================
+   SPECIAL EFFECTS
+   ============================================ */
+
+/* Shimmer loading effect */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Particle float effect */
+@keyframes particleFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(-10px) rotate(5deg);
+    opacity: 0.8;
+  }
+}
+
+/* Morphing shapes */
+@keyframes morphToCircle {
+  from {
+    border-radius: 4px;
+  }
+  to {
+    border-radius: 50%;
+  }
+}
+
+@keyframes liquidStretch {
+  0%, 100% {
+    transform: scale3d(1, 1, 1);
+    border-radius: 8px;
+  }
+  50% {
+    transform: scale3d(1.1, 0.9, 1);
+    border-radius: 16px;
+  }
+}
+
+/* Glow effects */
+@keyframes neonGlow {
+  0%, 100% {
+    box-shadow: 
+      0 0 5px rgba(var(--glow-color, 59, 130, 246), 0.5),
+      0 0 10px rgba(var(--glow-color, 59, 130, 246), 0.3),
+      0 0 15px rgba(var(--glow-color, 59, 130, 246), 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 0 10px rgba(var(--glow-color, 59, 130, 246), 0.8),
+      0 0 20px rgba(var(--glow-color, 59, 130, 246), 0.5),
+      0 0 30px rgba(var(--glow-color, 59, 130, 246), 0.2);
+  }
+}
+
+@keyframes subtleGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(var(--glow-color, 59, 130, 246), 0);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(var(--glow-color, 59, 130, 246), 0.1);
+  }
+}
+
+/* ============================================
+   STAGGERED ANIMATIONS
+   ============================================ */
+
+@keyframes staggerFadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Apply stagger delays using CSS variables */
+.stagger-item {
+  animation-delay: calc(var(--stagger-index, 0) * var(--stagger-delay, 100ms));
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Animation states */
+.animate-fade-in {
+  animation: fadeIn 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+.animate-pulse-gentle {
+  animation: gentlePulse 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+.animate-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 20%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.2) 80%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+/* Motion preference respecting animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .animate-pulse-gentle {
+    animation: none;
+  }
+}
+
+/* Performance optimizations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.will-change-auto {
+  will-change: auto;
+}
+
+/* GPU acceleration helpers */
+.gpu-accelerated {
+  transform: translate3d(0, 0, 0);
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}

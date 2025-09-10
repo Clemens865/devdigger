@@ -1,0 +1,582 @@
+/* Interactive Elements CSS - DevDigger Design System */
+
+/* Button V2 Animations and Effects */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px currentColor;
+  }
+  50% {
+    box-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes pulse-border {
+  0%, 100% {
+    border-color: currentColor;
+  }
+  50% {
+    border-color: transparent;
+  }
+}
+
+.animate-ripple {
+  animation: ripple 0.6s ease-out;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-border {
+  animation: pulse-border 2s ease-in-out infinite;
+}
+
+/* Button V2 Enhanced Styles */
+.button-v2 {
+  position: relative;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.button-v2::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.button-v2:hover::before {
+  opacity: 1;
+}
+
+/* 3D Depth Effect */
+.button-v2.depth-3d {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+  transform: translateY(0px);
+}
+
+.button-v2.depth-3d:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.16), 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+.button-v2.depth-3d:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* Glassmorphism Effect */
+.button-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.button-glass:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Neumorphic Effect */
+.button-neuro {
+  background: #f0f0f0;
+  box-shadow: 
+    8px 8px 16px rgba(163, 177, 198, 0.3),
+    -8px -8px 16px rgba(255, 255, 255, 0.8);
+  border: none;
+}
+
+.button-neuro:hover {
+  box-shadow: 
+    6px 6px 12px rgba(163, 177, 198, 0.4),
+    -6px -6px 12px rgba(255, 255, 255, 0.9);
+}
+
+.button-neuro:active {
+  box-shadow: 
+    inset 4px 4px 8px rgba(163, 177, 198, 0.3),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.8);
+}
+
+/* Gradient Border Animation */
+.button-gradient-border {
+  position: relative;
+  background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+  padding: 2px;
+  border-radius: 8px;
+}
+
+.button-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe);
+  background-size: 300% 300%;
+  animation: gradient-shift 3s ease infinite;
+  z-index: -1;
+}
+
+.button-gradient-border > * {
+  background: white;
+  border-radius: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Form Elements Styles */
+
+/* Custom Checkbox */
+.checkbox-custom {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d1d5db;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.checkbox-custom:checked {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  transform: scale(1.05);
+}
+
+.checkbox-custom:checked::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  animation: checkmark 0.2s ease forwards;
+}
+
+.checkbox-custom:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+@keyframes checkmark {
+  0% {
+    opacity: 0;
+    transform: rotate(45deg) scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(45deg) scale(1);
+  }
+}
+
+/* Custom Radio Button */
+.radio-custom {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d1d5db;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.radio-custom:checked {
+  border-color: #3b82f6;
+  background: #3b82f6;
+  transform: scale(1.05);
+}
+
+.radio-custom:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+  transform: translate(-50%, -50%) scale(0);
+  animation: radio-dot 0.2s ease forwards;
+}
+
+.radio-custom:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+@keyframes radio-dot {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Custom Switch */
+.switch-custom {
+  appearance: none;
+  width: 44px;
+  height: 24px;
+  background: #d1d5db;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.switch-custom::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.switch-custom:checked {
+  background: #3b82f6;
+}
+
+.switch-custom:checked::before {
+  transform: translateX(20px);
+}
+
+.switch-custom:hover {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Switch Size Variants */
+.switch-custom-sm {
+  appearance: none;
+  width: 36px;
+  height: 20px;
+  background: #d1d5db;
+  border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.switch-custom-sm::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.switch-custom-sm:checked {
+  background: #3b82f6;
+}
+
+.switch-custom-sm:checked::before {
+  transform: translateX(16px);
+}
+
+.switch-custom-sm:hover {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.switch-custom-lg {
+  appearance: none;
+  width: 52px;
+  height: 28px;
+  background: #d1d5db;
+  border-radius: 14px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.switch-custom-lg::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.switch-custom-lg:checked {
+  background: #3b82f6;
+}
+
+.switch-custom-lg:checked::before {
+  transform: translateX(24px);
+}
+
+.switch-custom-lg:hover {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Custom Range Slider */
+.range-custom {
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: #d1d5db;
+  outline: none;
+  cursor: pointer;
+}
+
+.range-custom::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.range-custom::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.1);
+}
+
+.range-custom::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.range-custom::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.1);
+}
+
+/* Split Button */
+.split-button {
+  display: inline-flex;
+  position: relative;
+}
+
+.split-button .split-main {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
+}
+
+.split-button .split-dropdown {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  padding-left: 8px;
+  padding-right: 8px;
+  min-width: 32px;
+}
+
+.split-button .split-dropdown::after {
+  content: '';
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 2px;
+  transform: rotate(45deg);
+  margin-left: 4px;
+}
+
+/* Magnetic Cursor Effect */
+.magnetic-button {
+  transition: transform 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* Hover Effects for Light Theme */
+.button-v2:hover {
+  transform: translateY(-1px);
+}
+
+.button-v2:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Focus Styles for Accessibility */
+.button-v2:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.checkbox-custom:focus-visible,
+.radio-custom:focus-visible,
+.switch-custom:focus-visible,
+.range-custom:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Loading States */
+.button-loading {
+  pointer-events: none;
+}
+
+.button-loading .button-content {
+  opacity: 0.6;
+}
+
+/* Haptic Feedback Simulation */
+@keyframes haptic-feedback {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+.haptic-feedback {
+  animation: haptic-feedback 0.1s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .button-v2 {
+    min-height: 44px; /* Touch-friendly minimum */
+  }
+  
+  .checkbox-custom,
+  .radio-custom {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .switch-custom {
+    width: 52px;
+    height: 28px;
+  }
+  
+  .switch-custom::before {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .switch-custom:checked::before {
+    transform: translateX(24px);
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .button-v2 {
+    border-width: 2px;
+  }
+  
+  .checkbox-custom,
+  .radio-custom,
+  .switch-custom {
+    border-width: 2px;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .button-v2,
+  .checkbox-custom,
+  .radio-custom,
+  .switch-custom,
+  .range-custom::-webkit-slider-thumb,
+  .range-custom::-moz-range-thumb {
+    transition: none;
+  }
+  
+  .animate-ripple,
+  .animate-glow,
+  .animate-float,
+  .animate-pulse-border {
+    animation: none;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .button-neuro {
+    background: #2d3748;
+    box-shadow: 
+      8px 8px 16px rgba(0, 0, 0, 0.3),
+      -8px -8px 16px rgba(74, 85, 104, 0.8);
+  }
+  
+  .button-neuro:hover {
+    box-shadow: 
+      6px 6px 12px rgba(0, 0, 0, 0.4),
+      -6px -6px 12px rgba(74, 85, 104, 0.9);
+  }
+  
+  .button-neuro:active {
+    box-shadow: 
+      inset 4px 4px 8px rgba(0, 0, 0, 0.3),
+      inset -4px -4px 8px rgba(74, 85, 104, 0.8);
+  }
+  
+  .checkbox-custom,
+  .radio-custom {
+    background: #2d3748;
+    border-color: #4a5568;
+  }
+  
+  .switch-custom {
+    background: #4a5568;
+  }
+  
+  .range-custom {
+    background: #4a5568;
+  }
+}

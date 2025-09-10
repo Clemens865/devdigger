@@ -1,0 +1,476 @@
+/**
+ * DevDigger Fluid Responsive System
+ * Advanced Scaling & Whitespace Management
+ * 
+ * This system provides sophisticated responsive behavior with:
+ * - Fluid scaling based on viewport and container queries
+ * - Mathematical progressions for perfect visual hierarchy
+ * - Intelligent whitespace that adapts to content density
+ * - Gallery-quality responsive patterns
+ */
+
+/* ================================
+   FLUID SCALING FOUNDATION
+   ================================ */
+
+:root {
+  /* Viewport-aware scaling functions */
+  --fluid-min-viewport: 320;
+  --fluid-max-viewport: 1440;
+  --fluid-screen: 100vw;
+
+  /* Fluid scaling multipliers */
+  --fluid-ratio-minor: 0.75;   /* 75% on small screens */
+  --fluid-ratio-major: 1.25;   /* 125% on large screens */
+  
+  /* Dynamic spacing that scales with viewport */
+  --space-fluid-xs: clamp(0.5rem, 0.4rem + 0.5vw, 0.75rem);
+  --space-fluid-sm: clamp(0.75rem, 0.65rem + 0.5vw, 1rem);
+  --space-fluid-md: clamp(1rem, 0.85rem + 0.75vw, 1.5rem);
+  --space-fluid-lg: clamp(1.25rem, 1rem + 1.25vw, 2rem);
+  --space-fluid-xl: clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem);
+  --space-fluid-2xl: clamp(2rem, 1.5rem + 2.5vw, 4rem);
+  --space-fluid-3xl: clamp(2.5rem, 1.8rem + 3.5vw, 6rem);
+
+  /* Fluid typography scale */
+  --text-fluid-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --text-fluid-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+  --text-fluid-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+  --text-fluid-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);
+  --text-fluid-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+  --text-fluid-2xl: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+  --text-fluid-3xl: clamp(1.875rem, 1.5rem + 1.875vw, 3rem);
+  --text-fluid-4xl: clamp(2.25rem, 1.8rem + 2.25vw, 4rem);
+  --text-fluid-5xl: clamp(3rem, 2.2rem + 4vw, 6rem);
+
+  /* Intelligent line heights that adapt */
+  --leading-fluid-tight: clamp(1.1, 1.05 + 0.25vw, 1.2);
+  --leading-fluid-normal: clamp(1.4, 1.3 + 0.5vw, 1.6);
+  --leading-fluid-relaxed: clamp(1.6, 1.5 + 0.5vw, 1.8);
+
+  /* Container-aware spacing */
+  --container-padding: clamp(1rem, 2.5vw, 2rem);
+  --container-margin: clamp(1.5rem, 5vw, 4rem);
+
+  /* Responsive breakpoint calculations */
+  --bp-xs: 20rem;     /* 320px */
+  --bp-sm: 32.375rem; /* 518px - φ × 320 */
+  --bp-md: 48rem;     /* 768px */
+  --bp-lg: 77.625rem; /* 1242px - φ × 768 */
+  --bp-xl: 90rem;     /* 1440px */
+  --bp-2xl: 120rem;   /* 1920px */
+}
+
+/* ================================
+   FLUID UTILITY CLASSES
+   ================================ */
+
+/* Fluid Spacing Classes */
+.space-fluid-xs { margin: var(--space-fluid-xs); }
+.space-fluid-sm { margin: var(--space-fluid-sm); }
+.space-fluid-md { margin: var(--space-fluid-md); }
+.space-fluid-lg { margin: var(--space-fluid-lg); }
+.space-fluid-xl { margin: var(--space-fluid-xl); }
+.space-fluid-2xl { margin: var(--space-fluid-2xl); }
+.space-fluid-3xl { margin: var(--space-fluid-3xl); }
+
+/* Directional Fluid Spacing */
+.mt-fluid-xs { margin-top: var(--space-fluid-xs); }
+.mt-fluid-sm { margin-top: var(--space-fluid-sm); }
+.mt-fluid-md { margin-top: var(--space-fluid-md); }
+.mt-fluid-lg { margin-top: var(--space-fluid-lg); }
+.mt-fluid-xl { margin-top: var(--space-fluid-xl); }
+.mt-fluid-2xl { margin-top: var(--space-fluid-2xl); }
+
+.mb-fluid-xs { margin-bottom: var(--space-fluid-xs); }
+.mb-fluid-sm { margin-bottom: var(--space-fluid-sm); }
+.mb-fluid-md { margin-bottom: var(--space-fluid-md); }
+.mb-fluid-lg { margin-bottom: var(--space-fluid-lg); }
+.mb-fluid-xl { margin-bottom: var(--space-fluid-xl); }
+.mb-fluid-2xl { margin-bottom: var(--space-fluid-2xl); }
+
+.ml-fluid-xs { margin-left: var(--space-fluid-xs); }
+.ml-fluid-sm { margin-left: var(--space-fluid-sm); }
+.ml-fluid-md { margin-left: var(--space-fluid-md); }
+.ml-fluid-lg { margin-left: var(--space-fluid-lg); }
+.ml-fluid-xl { margin-left: var(--space-fluid-xl); }
+
+.mr-fluid-xs { margin-right: var(--space-fluid-xs); }
+.mr-fluid-sm { margin-right: var(--space-fluid-sm); }
+.mr-fluid-md { margin-right: var(--space-fluid-md); }
+.mr-fluid-lg { margin-right: var(--space-fluid-lg); }
+.mr-fluid-xl { margin-right: var(--space-fluid-xl); }
+
+.mx-fluid-xs { margin-left: var(--space-fluid-xs); margin-right: var(--space-fluid-xs); }
+.mx-fluid-sm { margin-left: var(--space-fluid-sm); margin-right: var(--space-fluid-sm); }
+.mx-fluid-md { margin-left: var(--space-fluid-md); margin-right: var(--space-fluid-md); }
+.mx-fluid-lg { margin-left: var(--space-fluid-lg); margin-right: var(--space-fluid-lg); }
+.mx-fluid-xl { margin-left: var(--space-fluid-xl); margin-right: var(--space-fluid-xl); }
+
+.my-fluid-xs { margin-top: var(--space-fluid-xs); margin-bottom: var(--space-fluid-xs); }
+.my-fluid-sm { margin-top: var(--space-fluid-sm); margin-bottom: var(--space-fluid-sm); }
+.my-fluid-md { margin-top: var(--space-fluid-md); margin-bottom: var(--space-fluid-md); }
+.my-fluid-lg { margin-top: var(--space-fluid-lg); margin-bottom: var(--space-fluid-lg); }
+.my-fluid-xl { margin-top: var(--space-fluid-xl); margin-bottom: var(--space-fluid-xl); }
+
+/* Fluid Padding */
+.p-fluid-xs { padding: var(--space-fluid-xs); }
+.p-fluid-sm { padding: var(--space-fluid-sm); }
+.p-fluid-md { padding: var(--space-fluid-md); }
+.p-fluid-lg { padding: var(--space-fluid-lg); }
+.p-fluid-xl { padding: var(--space-fluid-xl); }
+.p-fluid-2xl { padding: var(--space-fluid-2xl); }
+
+.px-fluid-xs { padding-left: var(--space-fluid-xs); padding-right: var(--space-fluid-xs); }
+.px-fluid-sm { padding-left: var(--space-fluid-sm); padding-right: var(--space-fluid-sm); }
+.px-fluid-md { padding-left: var(--space-fluid-md); padding-right: var(--space-fluid-md); }
+.px-fluid-lg { padding-left: var(--space-fluid-lg); padding-right: var(--space-fluid-lg); }
+.px-fluid-xl { padding-left: var(--space-fluid-xl); padding-right: var(--space-fluid-xl); }
+
+.py-fluid-xs { padding-top: var(--space-fluid-xs); padding-bottom: var(--space-fluid-xs); }
+.py-fluid-sm { padding-top: var(--space-fluid-sm); padding-bottom: var(--space-fluid-sm); }
+.py-fluid-md { padding-top: var(--space-fluid-md); padding-bottom: var(--space-fluid-md); }
+.py-fluid-lg { padding-top: var(--space-fluid-lg); padding-bottom: var(--space-fluid-lg); }
+.py-fluid-xl { padding-top: var(--space-fluid-xl); padding-bottom: var(--space-fluid-xl); }
+
+/* Fluid Typography */
+.text-fluid-xs { font-size: var(--text-fluid-xs); }
+.text-fluid-sm { font-size: var(--text-fluid-sm); }
+.text-fluid-base { font-size: var(--text-fluid-base); }
+.text-fluid-lg { font-size: var(--text-fluid-lg); }
+.text-fluid-xl { font-size: var(--text-fluid-xl); }
+.text-fluid-2xl { font-size: var(--text-fluid-2xl); }
+.text-fluid-3xl { font-size: var(--text-fluid-3xl); }
+.text-fluid-4xl { font-size: var(--text-fluid-4xl); }
+.text-fluid-5xl { font-size: var(--text-fluid-5xl); }
+
+/* Fluid Line Heights */
+.leading-fluid-tight { line-height: var(--leading-fluid-tight); }
+.leading-fluid-normal { line-height: var(--leading-fluid-normal); }
+.leading-fluid-relaxed { line-height: var(--leading-fluid-relaxed); }
+
+/* ================================
+   INTELLIGENT WHITESPACE SYSTEM
+   ================================ */
+
+/* Context-aware spacing that adapts to content density */
+.whitespace-dense {
+  --local-space-scale: 0.75;
+}
+
+.whitespace-comfortable {
+  --local-space-scale: 1;
+}
+
+.whitespace-generous {
+  --local-space-scale: 1.25;
+}
+
+.whitespace-luxurious {
+  --local-space-scale: 1.618; /* Golden ratio multiplier */
+}
+
+/* Apply context scaling to spacing */
+.whitespace-dense .space-fluid-md,
+.whitespace-comfortable .space-fluid-md,
+.whitespace-generous .space-fluid-md,
+.whitespace-luxurious .space-fluid-md {
+  margin: calc(var(--space-fluid-md) * var(--local-space-scale, 1));
+}
+
+/* Content-density adaptive layouts */
+.content-dense {
+  --space-multiplier: 0.618; /* Inverse golden ratio */
+  line-height: var(--leading-fluid-tight);
+}
+
+.content-comfortable {
+  --space-multiplier: 1;
+  line-height: var(--leading-fluid-normal);
+}
+
+.content-spacious {
+  --space-multiplier: 1.618; /* Golden ratio */
+  line-height: var(--leading-fluid-relaxed);
+}
+
+/* ================================
+   ADVANCED CONTAINER SYSTEM
+   ================================ */
+
+/* Fluid containers that respect content needs */
+.container-fluid {
+  width: 100%;
+  max-width: 100%;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Content-aware containers */
+.container-content {
+  width: 100%;
+  max-width: min(100%, 75ch);
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-reading {
+  width: 100%;
+  max-width: min(100%, 65ch);
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-narrow {
+  width: 100%;
+  max-width: min(100%, 45ch);
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ================================
+   SOPHISTICATED GRID PATTERNS
+   ================================ */
+
+/* Auto-sizing grid with intelligent breakpoints */
+.grid-intelligent {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(
+      clamp(250px, 25vw, 300px),
+      1fr
+    )
+  );
+  gap: var(--space-fluid-md);
+  padding: var(--space-fluid-lg);
+}
+
+/* Golden ratio grid */
+.grid-golden {
+  display: grid;
+  grid-template-columns: 
+    minmax(0, var(--tension-secondary)) 
+    minmax(0, var(--tension-primary));
+  gap: var(--space-fluid-lg);
+  align-items: start;
+}
+
+/* Magazine-style grid */
+.grid-magazine {
+  display: grid;
+  grid-template-columns: 
+    minmax(200px, 1fr) 
+    minmax(400px, 2fr) 
+    minmax(150px, 1fr);
+  grid-template-areas: 
+    "sidebar content aside"
+    "sidebar content aside";
+  gap: var(--space-fluid-xl);
+  min-height: 100vh;
+}
+
+/* Masonry-like auto-grid */
+.grid-masonry {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-auto-rows: min-content;
+  gap: var(--space-fluid-md);
+}
+
+/* ================================
+   BREAKPOINT-AWARE LAYOUTS
+   ================================ */
+
+/* Mobile-first progressive enhancement */
+@media (max-width: 31.9375rem) { /* < 518px */
+  .grid-golden,
+  .grid-magazine {
+    grid-template-columns: 1fr;
+    grid-template-areas: none;
+  }
+  
+  .container-fluid {
+    --container-padding: var(--space-fluid-sm);
+  }
+  
+  /* Tighter spacing on mobile */
+  .whitespace-comfortable {
+    --local-space-scale: 0.85;
+  }
+}
+
+@media (min-width: 32rem) and (max-width: 47.9375rem) { /* 518px - 767px */
+  .grid-magazine {
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas: 
+      "sidebar content"
+      "aside aside";
+  }
+  
+  .grid-intelligent {
+    grid-template-columns: repeat(auto-fit, minmax(clamp(200px, 30vw, 250px), 1fr));
+  }
+}
+
+@media (min-width: 48rem) and (max-width: 77.5625rem) { /* 768px - 1241px */
+  .grid-golden {
+    gap: var(--space-fluid-xl);
+  }
+  
+  .container-fluid {
+    --container-padding: var(--space-fluid-md);
+  }
+}
+
+@media (min-width: 77.625rem) { /* 1242px+ */
+  .grid-intelligent {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+  
+  .container-fluid {
+    --container-padding: var(--space-fluid-lg);
+  }
+  
+  /* More generous spacing on large screens */
+  .whitespace-comfortable {
+    --local-space-scale: 1.1;
+  }
+  
+  .whitespace-generous {
+    --local-space-scale: 1.4;
+  }
+}
+
+/* ================================
+   CONTAINER QUERIES SUPPORT
+   ================================ */
+
+/* Component-level responsive behavior */
+.card-responsive {
+  container-type: inline-size;
+  container-name: card;
+}
+
+@container card (min-width: 300px) {
+  .card-responsive .card-content {
+    padding: var(--space-fluid-lg);
+  }
+}
+
+@container card (min-width: 500px) {
+  .card-responsive .card-content {
+    padding: var(--space-fluid-xl);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-fluid-md);
+  }
+}
+
+/* ================================
+   VISUAL RHYTHM SYSTEM
+   ================================ */
+
+/* Mathematical rhythm based on base line height */
+.rhythm-system > * {
+  margin-bottom: var(--rhythm-base);
+}
+
+.rhythm-system h1 {
+  margin-top: calc(var(--rhythm-base) * 2);
+  margin-bottom: var(--rhythm-base);
+  line-height: calc(var(--rhythm-base) * 2);
+}
+
+.rhythm-system h2 {
+  margin-top: calc(var(--rhythm-base) * 1.5);
+  margin-bottom: calc(var(--rhythm-base) * 0.5);
+  line-height: calc(var(--rhythm-base) * 1.5);
+}
+
+.rhythm-system h3 {
+  margin-top: var(--rhythm-base);
+  margin-bottom: calc(var(--rhythm-base) * 0.5);
+  line-height: var(--rhythm-base);
+}
+
+.rhythm-system p,
+.rhythm-system ul,
+.rhythm-system ol {
+  margin-bottom: var(--rhythm-base);
+  line-height: var(--rhythm-base);
+}
+
+/* ================================
+   PERFORMANCE OPTIMIZATIONS
+   ================================ */
+
+/* Optimize for smooth scaling */
+.fluid-optimized {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Efficient repaints */
+.layout-efficient {
+  contain: layout style paint;
+}
+
+/* Content visibility for large layouts */
+.layout-lazy {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
+/* ================================
+   ACCESSIBILITY CONSIDERATIONS
+   ================================ */
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .fluid-optimized {
+    transform: none;
+    will-change: auto;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .card-responsive,
+  .grid-intelligent > *,
+  .grid-golden > * {
+    border: 2px solid;
+    background: Canvas;
+    color: CanvasText;
+  }
+}
+
+/* Print optimizations */
+@media print {
+  .grid-magazine,
+  .grid-golden,
+  .grid-intelligent {
+    display: block;
+  }
+  
+  .container-fluid {
+    max-width: none;
+    padding: 0;
+  }
+  
+  :root {
+    --space-fluid-xs: 0.5rem;
+    --space-fluid-sm: 0.75rem;
+    --space-fluid-md: 1rem;
+    --space-fluid-lg: 1.25rem;
+    --space-fluid-xl: 1.5rem;
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "name": "devdigger",
+  "productName": "DevDigger",
+  "version": "1.0.0",
+  "main": "out/main/index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "start": "electron-vite preview",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "typecheck": "tsc --noEmit",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "bin": {
+    "devdigger": "./devdigger-global.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@electron-toolkit/preload": "^3.0.2",
+    "@electron-toolkit/utils": "^4.0.0",
+    "@types/node": "^24.3.1",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.2",
+    "concurrently": "^9.2.1",
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.12",
+    "electron-vite": "^4.0.0",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.5"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.87.1",
+    "axios": "^1.11.0",
+    "better-sqlite3": "^12.2.0",
+    "bullmq": "^5.58.5",
+    "chalk": "^5.6.2",
+    "chart.js": "^4.5.0",
+    "cheerio": "^1.1.2",
+    "commander": "^14.0.0",
+    "framer-motion": "^12.23.12",
+    "lucide-react": "^0.543.0",
+    "natural": "^8.1.0",
+    "ollama": "^0.5.17",
+    "react": "^19.1.1",
+    "react-chartjs-2": "^5.3.0",
+    "react-dom": "^19.1.1",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "tailwindcss": "^4.1.13",
+    "vectra": "^0.11.1",
+    "zustand": "^5.0.8"
+  }
+}

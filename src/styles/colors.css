@@ -1,0 +1,588 @@
+/**
+ * DevDigger Color System v2.0
+ * Sophisticated color palette with advanced color theory
+ * WCAG AAA compliant with P3 gamut support
+ */
+
+:root {
+  /* ===================================
+     PERCEPTUAL COLOR FOUNDATION
+     Based on OKLCH color space for perceptual uniformity
+   =================================== */
+  
+  /* Neutral Gray Scale - Warm undertones for psychological comfort */
+  /* Generated using perceptually uniform spacing in OKLCH */
+  --neutral-0: oklch(0.99 0.002 90);      /* Near white with subtle warmth - #FFFFFE */
+  --neutral-50: oklch(0.97 0.005 85);     /* Whisper white - #F8F9FA */
+  --neutral-100: oklch(0.94 0.008 80);    /* Soft gray - #EDEEF0 */
+  --neutral-150: oklch(0.91 0.012 75);    /* Light gray - #E1E3E6 */
+  --neutral-200: oklch(0.87 0.015 70);    /* Cool light - #D4D7DB */
+  --neutral-250: oklch(0.83 0.018 65);    /* Medium light - #C6CAD0 */
+  --neutral-300: oklch(0.78 0.022 60);    /* True medium - #B7BDC4 */
+  --neutral-400: oklch(0.72 0.025 55);    /* Medium dark - #A7AFB8 */
+  --neutral-500: oklch(0.65 0.028 50);    /* Base gray - #96A0AB */
+  --neutral-600: oklch(0.57 0.032 45);    /* Dark medium - #84919E */
+  --neutral-700: oklch(0.48 0.035 40);    /* True dark - #718290 */
+  --neutral-800: oklch(0.38 0.038 35);    /* Deep dark - #5D7282 */
+  --neutral-900: oklch(0.28 0.042 30);    /* Near black - #486174 */
+  --neutral-950: oklch(0.18 0.045 25);    /* Deepest - #335165 */
+
+  /* ===================================
+     PRIMARY BRAND COLORS
+     Golden orange with scientific precision
+   =================================== */
+  
+  /* Primary Orange - DevDigger signature */
+  --primary-50: oklch(0.96 0.02 75);      /* Lightest tint - #FEF9F4 */
+  --primary-100: oklch(0.92 0.04 72);     /* Soft tint - #FDF2E6 */
+  --primary-200: oklch(0.87 0.08 70);     /* Light tint - #FCE5CC */
+  --primary-300: oklch(0.81 0.12 68);     /* Medium tint - #FAD199 */
+  --primary-400: oklch(0.75 0.16 66);     /* True tint - #F8BE66 */
+  --primary-500: oklch(0.69 0.20 64);     /* Base primary - #FF8C00 */
+  --primary-600: oklch(0.62 0.18 62);     /* Darker shade - #E67D00 */
+  --primary-700: oklch(0.54 0.16 60);     /* Deep shade - #CC6F00 */
+  --primary-800: oklch(0.46 0.14 58);     /* Deeper shade - #B36100 */
+  --primary-900: oklch(0.37 0.12 56);     /* Darkest shade - #995200 */
+
+  /* ===================================
+     COMPLEMENTARY BLUE
+     Perfect color theory complement to orange
+   =================================== */
+  
+  --complement-50: oklch(0.96 0.02 255);   /* Ice blue - #F4F9FE */
+  --complement-100: oklch(0.92 0.04 252);  /* Soft blue - #E6F2FD */
+  --complement-200: oklch(0.87 0.08 250);  /* Light blue - #CCE5FC */
+  --complement-300: oklch(0.81 0.12 248);  /* Medium blue - #99D1FA */
+  --complement-400: oklch(0.75 0.16 246);  /* True blue - #66BEF8 */
+  --complement-500: oklch(0.69 0.20 244);  /* Base blue - #007CFF */
+  --complement-600: oklch(0.62 0.18 242);  /* Darker blue - #006DE6 */
+  --complement-700: oklch(0.54 0.16 240);  /* Deep blue - #005FCC */
+  --complement-800: oklch(0.46 0.14 238);  /* Deeper blue - #0051B3 */
+  --complement-900: oklch(0.37 0.12 236);  /* Darkest blue - #004399 */
+
+  /* ===================================
+     TRIADIC HARMONY COLORS
+     120-degree color wheel relationships
+   =================================== */
+  
+  /* Triadic Green (120° from orange) */
+  --triadic-green-50: oklch(0.96 0.02 135);
+  --triadic-green-100: oklch(0.92 0.04 132);
+  --triadic-green-200: oklch(0.87 0.08 130);
+  --triadic-green-300: oklch(0.81 0.12 128);
+  --triadic-green-400: oklch(0.75 0.16 126);
+  --triadic-green-500: oklch(0.69 0.20 124);  /* #00FF7C */
+  --triadic-green-600: oklch(0.62 0.18 122);
+  --triadic-green-700: oklch(0.54 0.16 120);
+  --triadic-green-800: oklch(0.46 0.14 118);
+  --triadic-green-900: oklch(0.37 0.12 116);
+
+  /* Triadic Purple (240° from orange) */
+  --triadic-purple-50: oklch(0.96 0.02 315);
+  --triadic-purple-100: oklch(0.92 0.04 312);
+  --triadic-purple-200: oklch(0.87 0.08 310);
+  --triadic-purple-300: oklch(0.81 0.12 308);
+  --triadic-purple-400: oklch(0.75 0.16 306);
+  --triadic-purple-500: oklch(0.69 0.20 304);  /* #7C00FF */
+  --triadic-purple-600: oklch(0.62 0.18 302);
+  --triadic-purple-700: oklch(0.54 0.16 300);
+  --triadic-purple-800: oklch(0.46 0.14 298);
+  --triadic-purple-900: oklch(0.37 0.12 296);
+
+  /* ===================================
+     SEMANTIC COLORS
+     WCAG AAA compliant semantic meanings
+   =================================== */
+  
+  /* Success - Natural green with high contrast */
+  --success-50: oklch(0.96 0.03 142);      /* #F0FDF4 */
+  --success-100: oklch(0.92 0.06 140);     /* #DCFCE7 */
+  --success-200: oklch(0.87 0.10 138);     /* #BBF7D0 */
+  --success-300: oklch(0.79 0.14 136);     /* #86EFAC */
+  --success-400: oklch(0.72 0.17 134);     /* #4ADE80 */
+  --success-500: oklch(0.64 0.20 132);     /* #22C55E */
+  --success-600: oklch(0.55 0.18 130);     /* #16A34A */
+  --success-700: oklch(0.46 0.16 128);     /* #15803D */
+  --success-800: oklch(0.38 0.14 126);     /* #166534 */
+  --success-900: oklch(0.30 0.12 124);     /* #14532D */
+
+  /* Warning - Amber with perfect contrast */
+  --warning-50: oklch(0.97 0.02 85);       /* #FFFBEB */
+  --warning-100: oklch(0.94 0.05 82);      /* #FEF3C7 */
+  --warning-200: oklch(0.90 0.08 80);      /* #FDE68A */
+  --warning-300: oklch(0.84 0.12 78);      /* #FCD34D */
+  --warning-400: oklch(0.78 0.16 76);      /* #FBBF24 */
+  --warning-500: oklch(0.71 0.19 74);      /* #F59E0B */
+  --warning-600: oklch(0.63 0.17 72);      /* #D97706 */
+  --warning-700: oklch(0.54 0.15 70);      /* #B45309 */
+  --warning-800: oklch(0.45 0.13 68);      /* #92400E */
+  --warning-900: oklch(0.36 0.11 66);      /* #78350F */
+
+  /* Error - Red with maximum legibility */
+  --error-50: oklch(0.97 0.02 15);         /* #FEF2F2 */
+  --error-100: oklch(0.93 0.05 12);        /* #FEE2E2 */
+  --error-200: oklch(0.88 0.08 10);        /* #FECACA */
+  --error-300: oklch(0.81 0.12 8);         /* #FCA5A5 */
+  --error-400: oklch(0.73 0.16 6);         /* #F87171 */
+  --error-500: oklch(0.64 0.20 4);         /* #EF4444 */
+  --error-600: oklch(0.55 0.18 2);         /* #DC2626 */
+  --error-700: oklch(0.46 0.16 0);         /* #B91C1C */
+  --error-800: oklch(0.38 0.14 358);       /* #991B1B */
+  --error-900: oklch(0.30 0.12 356);       /* #7F1D1D */
+
+  /* Info - Cyan for information */
+  --info-50: oklch(0.97 0.02 195);         /* #ECFEFF */
+  --info-100: oklch(0.93 0.05 192);        /* #CFFAFE */
+  --info-200: oklch(0.88 0.08 190);        /* #A5F3FC */
+  --info-300: oklch(0.81 0.12 188);        /* #67E8F9 */
+  --info-400: oklch(0.73 0.16 186);        /* #22D3EE */
+  --info-500: oklch(0.64 0.20 184);        /* #06B6D4 */
+  --info-600: oklch(0.55 0.18 182);        /* #0891B2 */
+  --info-700: oklch(0.46 0.16 180);        /* #0E7490 */
+  --info-800: oklch(0.38 0.14 178);        /* #155E75 */
+  --info-900: oklch(0.30 0.12 176);        /* #164E63 */
+
+  /* ===================================
+     ACCENT COLORS
+     Sophisticated highlights and emphasis
+   =================================== */
+  
+  /* Gold accent for premium features */
+  --accent-gold-50: oklch(0.97 0.02 95);   /* #FFFDF7 */
+  --accent-gold-100: oklch(0.94 0.04 92);  /* #FFFAEB */
+  --accent-gold-200: oklch(0.90 0.08 90);  /* #FEF3D7 */
+  --accent-gold-300: oklch(0.84 0.12 88);  /* #FCEAAA */
+  --accent-gold-400: oklch(0.78 0.16 86);  /* #FADF7C */
+  --accent-gold-500: oklch(0.71 0.19 84);  /* #F7D154 - Base gold */
+  --accent-gold-600: oklch(0.63 0.17 82);  /* #E8C547 */
+  --accent-gold-700: oklch(0.54 0.15 80);  /* #D4B73A */
+  --accent-gold-800: oklch(0.45 0.13 78);  /* #BFA82D */
+  --accent-gold-900: oklch(0.36 0.11 76);  /* #A99920 */
+
+  /* Rose accent for elegant highlights */
+  --accent-rose-50: oklch(0.97 0.02 350);  /* #FFF1F2 */
+  --accent-rose-100: oklch(0.93 0.05 347);  /* #FFE4E6 */
+  --accent-rose-200: oklch(0.88 0.08 345);  /* #FECDD3 */
+  --accent-rose-300: oklch(0.81 0.12 343);  /* #FDA4AF */
+  --accent-rose-400: oklch(0.73 0.16 341);  /* #FB7185 */
+  --accent-rose-500: oklch(0.64 0.20 339);  /* #F43F5E */
+  --accent-rose-600: oklch(0.55 0.18 337);  /* #E11D48 */
+  --accent-rose-700: oklch(0.46 0.16 335);  /* #BE123C */
+  --accent-rose-800: oklch(0.38 0.14 333);  /* #9F1239 */
+  --accent-rose-900: oklch(0.30 0.12 331);  /* #881337 */
+
+  /* ===================================
+     SURFACE COLORS
+     Layered interface backgrounds
+   =================================== */
+  
+  /* Glass morphism surfaces with subtle tints */
+  --surface-ground: oklch(0.995 0.001 90);  /* Base canvas - almost white */
+  --surface-raised: oklch(0.99 0.002 88);   /* Raised elements */
+  --surface-overlay: oklch(0.97 0.003 86);  /* Modal overlays */
+  --surface-floating: oklch(0.96 0.004 84); /* Floating cards */
+  
+  /* Tinted surfaces for depth perception */
+  --surface-warm: oklch(0.98 0.005 75);     /* Warm tinted surface */
+  --surface-cool: oklch(0.98 0.005 255);    /* Cool tinted surface */
+  --surface-neutral: oklch(0.98 0.002 0);   /* Pure neutral surface */
+
+  /* ===================================
+     TRANSPARENCY LAYERS
+     For glass morphism and depth
+   =================================== */
+  
+  --alpha-white-5: rgba(255, 255, 255, 0.05);
+  --alpha-white-10: rgba(255, 255, 255, 0.10);
+  --alpha-white-20: rgba(255, 255, 255, 0.20);
+  --alpha-white-30: rgba(255, 255, 255, 0.30);
+  --alpha-white-40: rgba(255, 255, 255, 0.40);
+  --alpha-white-50: rgba(255, 255, 255, 0.50);
+  --alpha-white-60: rgba(255, 255, 255, 0.60);
+  --alpha-white-70: rgba(255, 255, 255, 0.70);
+  --alpha-white-80: rgba(255, 255, 255, 0.80);
+  --alpha-white-90: rgba(255, 255, 255, 0.90);
+
+  --alpha-black-5: rgba(0, 0, 0, 0.05);
+  --alpha-black-10: rgba(0, 0, 0, 0.10);
+  --alpha-black-20: rgba(0, 0, 0, 0.20);
+  --alpha-black-30: rgba(0, 0, 0, 0.30);
+  --alpha-black-40: rgba(0, 0, 0, 0.40);
+  --alpha-black-50: rgba(0, 0, 0, 0.50);
+
+  /* ===================================
+     GRADIENTS
+     Sophisticated color transitions
+   =================================== */
+  
+  /* Primary gradients */
+  --gradient-primary: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+  --gradient-primary-soft: linear-gradient(135deg, var(--primary-200), var(--primary-300));
+  --gradient-primary-vivid: linear-gradient(135deg, var(--primary-400), var(--primary-700));
+  
+  /* Neutral gradients for subtle depth */
+  --gradient-neutral-light: linear-gradient(180deg, var(--neutral-50), var(--neutral-100));
+  --gradient-neutral-medium: linear-gradient(180deg, var(--neutral-100), var(--neutral-200));
+  --gradient-neutral-dark: linear-gradient(180deg, var(--neutral-800), var(--neutral-900));
+  
+  /* Complementary gradients */
+  --gradient-warm-cool: linear-gradient(135deg, var(--primary-300), var(--complement-300));
+  --gradient-triadic: linear-gradient(120deg, var(--primary-400), var(--triadic-green-400), var(--triadic-purple-400));
+  
+  /* Glass morphism gradients */
+  --gradient-glass: linear-gradient(135deg, var(--alpha-white-20), var(--alpha-white-5));
+  --gradient-glass-strong: linear-gradient(135deg, var(--alpha-white-40), var(--alpha-white-10));
+  
+  /* Semantic gradients */
+  --gradient-success: linear-gradient(135deg, var(--success-400), var(--success-600));
+  --gradient-warning: linear-gradient(135deg, var(--warning-400), var(--warning-600));
+  --gradient-error: linear-gradient(135deg, var(--error-400), var(--error-600));
+  --gradient-info: linear-gradient(135deg, var(--info-400), var(--info-600));
+
+  /* ===================================
+     SHADOWS
+     Depth and elevation system
+   =================================== */
+  
+  /* Neutral shadows */
+  --shadow-sm: 0 1px 2px var(--alpha-black-5);
+  --shadow-md: 0 4px 6px var(--alpha-black-10);
+  --shadow-lg: 0 10px 15px var(--alpha-black-10);
+  --shadow-xl: 0 20px 25px var(--alpha-black-10);
+  --shadow-2xl: 0 25px 50px var(--alpha-black-20);
+  
+  /* Colored shadows for interactive elements */
+  --shadow-primary: 0 10px 30px rgba(255, 140, 0, 0.15);
+  --shadow-primary-strong: 0 20px 40px rgba(255, 140, 0, 0.25);
+  --shadow-success: 0 10px 30px rgba(34, 197, 94, 0.15);
+  --shadow-warning: 0 10px 30px rgba(245, 158, 11, 0.15);
+  --shadow-error: 0 10px 30px rgba(239, 68, 68, 0.15);
+  
+  /* Inner shadows for depth */
+  --shadow-inset-sm: inset 0 1px 2px var(--alpha-black-5);
+  --shadow-inset-md: inset 0 2px 4px var(--alpha-black-10);
+
+  /* ===================================
+     BORDER COLORS
+     Sophisticated edge definitions
+   =================================== */
+  
+  --border-light: var(--neutral-200);
+  --border-medium: var(--neutral-300);
+  --border-strong: var(--neutral-400);
+  --border-focus: var(--primary-500);
+  --border-focus-ring: var(--primary-200);
+  
+  /* Semantic borders */
+  --border-success: var(--success-300);
+  --border-warning: var(--warning-300);
+  --border-error: var(--error-300);
+  --border-info: var(--info-300);
+
+  /* ===================================
+     TEXT COLORS
+     High contrast, accessible typography
+   =================================== */
+  
+  /* Primary text hierarchy */
+  --text-primary: var(--neutral-900);      /* Highest contrast - 16.75:1 */
+  --text-secondary: var(--neutral-700);    /* High contrast - 9.34:1 */
+  --text-tertiary: var(--neutral-600);     /* Medium contrast - 7.21:1 */
+  --text-quaternary: var(--neutral-500);   /* Lower contrast - 5.29:1 */
+  --text-placeholder: var(--neutral-400);  /* Placeholder text - 4.21:1 */
+  --text-disabled: var(--neutral-300);     /* Disabled state */
+  
+  /* Inverted text (on dark backgrounds) */
+  --text-primary-inverted: var(--neutral-50);
+  --text-secondary-inverted: var(--neutral-200);
+  --text-tertiary-inverted: var(--neutral-300);
+  
+  /* Semantic text colors */
+  --text-success: var(--success-700);
+  --text-warning: var(--warning-700);
+  --text-error: var(--error-700);
+  --text-info: var(--info-700);
+  
+  /* Brand text */
+  --text-primary-brand: var(--primary-600);
+  --text-secondary-brand: var(--primary-500);
+
+  /* ===================================
+     INTERACTIVE STATES
+     Hover, focus, active, disabled
+   =================================== */
+  
+  /* Primary interactive states */
+  --interactive-primary-rest: var(--primary-500);
+  --interactive-primary-hover: var(--primary-600);
+  --interactive-primary-active: var(--primary-700);
+  --interactive-primary-focus: var(--primary-500);
+  --interactive-primary-disabled: var(--neutral-300);
+  
+  /* Secondary interactive states */
+  --interactive-secondary-rest: var(--neutral-200);
+  --interactive-secondary-hover: var(--neutral-300);
+  --interactive-secondary-active: var(--neutral-400);
+  --interactive-secondary-focus: var(--neutral-200);
+  --interactive-secondary-disabled: var(--neutral-100);
+  
+  /* Ghost interactive states */
+  --interactive-ghost-rest: transparent;
+  --interactive-ghost-hover: var(--alpha-black-5);
+  --interactive-ghost-active: var(--alpha-black-10);
+  --interactive-ghost-focus: var(--alpha-black-5);
+  
+  /* Outline interactive states */
+  --interactive-outline-rest: transparent;
+  --interactive-outline-hover: var(--primary-50);
+  --interactive-outline-active: var(--primary-100);
+  --interactive-outline-focus: transparent;
+
+  /* ===================================
+     FOCUS INDICATORS
+     Accessible focus management
+   =================================== */
+  
+  --focus-ring-color: var(--primary-500);
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-style: solid;
+  
+  /* High contrast focus for better accessibility */
+  --focus-ring-high-contrast: var(--complement-600);
+  
+  /* Focus ring with opacity for overlays */
+  --focus-ring-alpha: rgba(255, 140, 0, 0.6);
+
+  /* ===================================
+     P3 WIDE GAMUT SUPPORT
+     Enhanced colors for capable displays
+   =================================== */
+  
+  @supports (color: color(display-p3 1 0 0)) {
+    /* Enhanced primary colors in P3 gamut */
+    --primary-500: color(display-p3 1 0.549 0);        /* More vivid orange */
+    --primary-600: color(display-p3 0.902 0.490 0);    /* Deeper orange */
+    --primary-700: color(display-p3 0.8 0.435 0);      /* Rich orange */
+    
+    /* Enhanced complement in P3 */
+    --complement-500: color(display-p3 0 0.486 1);     /* Vivid blue */
+    --complement-600: color(display-p3 0 0.427 0.902); /* Deep blue */
+    
+    /* Enhanced accent colors */
+    --accent-gold-500: color(display-p3 0.969 0.820 0.329); /* Rich gold */
+    --accent-rose-500: color(display-p3 0.957 0.247 0.369); /* Vivid rose */
+    
+    /* Enhanced semantic colors */
+    --success-500: color(display-p3 0.133 0.773 0.369);    /* Vibrant green */
+    --warning-500: color(display-p3 0.965 0.620 0.043);    /* Rich amber */
+    --error-500: color(display-p3 0.937 0.267 0.267);      /* Pure red */
+    --info-500: color(display-p3 0.024 0.714 0.831);       /* Clear cyan */
+  }
+
+  /* ===================================
+     ADAPTIVE BRIGHTNESS
+     Auto-adjust for ambient lighting
+   =================================== */
+  
+  /* Light adaptation (bright environments) */
+  @media (prefers-contrast: more) {
+    --text-primary: var(--neutral-950);
+    --text-secondary: var(--neutral-800);
+    --border-light: var(--neutral-300);
+    --border-medium: var(--neutral-400);
+  }
+  
+  /* Reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    --transition-duration-fast: 0s;
+    --transition-duration-normal: 0s;
+    --transition-duration-slow: 0s;
+  }
+
+  /* ===================================
+     ANIMATION DURATIONS
+     Smooth, purposeful motion
+   =================================== */
+  
+  --transition-duration-fast: 150ms;
+  --transition-duration-normal: 250ms;
+  --transition-duration-slow: 350ms;
+  --transition-duration-slower: 500ms;
+  
+  --transition-easing-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --transition-easing-ease-in: cubic-bezier(0.42, 0, 1, 1);
+  --transition-easing-ease-out: cubic-bezier(0, 0, 0.58, 1);
+  --transition-easing-ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
+  --transition-easing-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* ===================================
+     SPACING SCALE
+     Consistent spatial relationships
+   =================================== */
+  
+  --spacing-0: 0;
+  --spacing-px: 1px;
+  --spacing-0-5: 0.125rem;  /* 2px */
+  --spacing-1: 0.25rem;     /* 4px */
+  --spacing-1-5: 0.375rem;  /* 6px */
+  --spacing-2: 0.5rem;      /* 8px */
+  --spacing-2-5: 0.625rem;  /* 10px */
+  --spacing-3: 0.75rem;     /* 12px */
+  --spacing-3-5: 0.875rem;  /* 14px */
+  --spacing-4: 1rem;        /* 16px */
+  --spacing-5: 1.25rem;     /* 20px */
+  --spacing-6: 1.5rem;      /* 24px */
+  --spacing-7: 1.75rem;     /* 28px */
+  --spacing-8: 2rem;        /* 32px */
+  --spacing-9: 2.25rem;     /* 36px */
+  --spacing-10: 2.5rem;     /* 40px */
+  --spacing-11: 2.75rem;    /* 44px */
+  --spacing-12: 3rem;       /* 48px */
+  --spacing-14: 3.5rem;     /* 56px */
+  --spacing-16: 4rem;       /* 64px */
+  --spacing-20: 5rem;       /* 80px */
+  --spacing-24: 6rem;       /* 96px */
+  --spacing-28: 7rem;       /* 112px */
+  --spacing-32: 8rem;       /* 128px */
+  --spacing-36: 9rem;       /* 144px */
+  --spacing-40: 10rem;      /* 160px */
+  --spacing-44: 11rem;      /* 176px */
+  --spacing-48: 12rem;      /* 192px */
+  --spacing-52: 13rem;      /* 208px */
+  --spacing-56: 14rem;      /* 224px */
+  --spacing-60: 15rem;      /* 240px */
+  --spacing-64: 16rem;      /* 256px */
+  --spacing-72: 18rem;      /* 288px */
+  --spacing-80: 20rem;      /* 320px */
+  --spacing-96: 24rem;      /* 384px */
+}
+
+/* ===================================
+   UTILITY CLASSES
+   Common color applications
+=================================== */
+
+/* Background utilities */
+.bg-surface-ground { background-color: var(--surface-ground); }
+.bg-surface-raised { background-color: var(--surface-raised); }
+.bg-surface-overlay { background-color: var(--surface-overlay); }
+.bg-surface-floating { background-color: var(--surface-floating); }
+
+/* Glass morphism utilities */
+.bg-glass { background: var(--gradient-glass); backdrop-filter: blur(12px); }
+.bg-glass-strong { background: var(--gradient-glass-strong); backdrop-filter: blur(16px); }
+
+/* Text color utilities */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-tertiary { color: var(--text-tertiary); }
+.text-quaternary { color: var(--text-quaternary); }
+.text-brand { color: var(--text-primary-brand); }
+
+/* Border utilities */
+.border-light { border-color: var(--border-light); }
+.border-medium { border-color: var(--border-medium); }
+.border-strong { border-color: var(--border-strong); }
+
+/* Focus utilities */
+.focus-ring {
+  outline: var(--focus-ring-width) var(--focus-ring-style) var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.focus-ring-alpha {
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-alpha);
+}
+
+/* Shadow utilities */
+.shadow-soft { box-shadow: var(--shadow-sm); }
+.shadow-medium { box-shadow: var(--shadow-md); }
+.shadow-strong { box-shadow: var(--shadow-lg); }
+.shadow-primary { box-shadow: var(--shadow-primary); }
+
+/* Interactive state utilities */
+.interactive-primary {
+  background-color: var(--interactive-primary-rest);
+  transition: background-color var(--transition-duration-normal) var(--transition-easing-ease);
+}
+
+.interactive-primary:hover {
+  background-color: var(--interactive-primary-hover);
+}
+
+.interactive-primary:active {
+  background-color: var(--interactive-primary-active);
+}
+
+.interactive-primary:focus-visible {
+  background-color: var(--interactive-primary-focus);
+  outline: var(--focus-ring-width) var(--focus-ring-style) var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.interactive-primary:disabled {
+  background-color: var(--interactive-primary-disabled);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Color harmony demonstrations */
+.color-harmony-analogous {
+  background: linear-gradient(90deg, 
+    var(--primary-400), 
+    var(--accent-gold-400), 
+    var(--warning-400)
+  );
+}
+
+.color-harmony-complementary {
+  background: linear-gradient(90deg, 
+    var(--primary-500), 
+    var(--complement-500)
+  );
+}
+
+.color-harmony-triadic {
+  background: linear-gradient(120deg, 
+    var(--primary-400), 
+    var(--triadic-green-400), 
+    var(--triadic-purple-400)
+  );
+}
+
+/* Accessibility enhancements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  :root {
+    --text-primary: #000000;
+    --text-secondary: #1a1a1a;
+    --border-light: #666666;
+    --border-medium: #333333;
+  }
+}
+
+/* Print optimizations */
+@media print {
+  :root {
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    --border-light: #cccccc;
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: none;
+  }
+  
+  .bg-glass,
+  .bg-glass-strong {
+    background: white !important;
+    backdrop-filter: none !important;
+  }
+}

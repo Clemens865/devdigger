@@ -1,0 +1,494 @@
+/**
+ * DevDigger Typography System
+ * 
+ * Features:
+ * - Perfect Fifth ratio scale (3:2 = 1.5)
+ * - Fluid responsive typography
+ * - Optical sizing and variable fonts
+ * - Advanced typographic utilities
+ * - Baseline grid alignment
+ * - Performance-optimized font loading
+ */
+
+/* ==========================================================================
+   Font Face Definitions & Variable Font Loading
+   ========================================================================== */
+
+@supports (font-variation-settings: normal) {
+  /* Inter Variable Font for UI */
+  @font-face {
+    font-family: 'Inter Variable';
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url('https://rsms.me/inter/font-files/InterVariable.woff2') format('woff2');
+    font-named-instance: 'Regular';
+  }
+
+  @font-face {
+    font-family: 'Inter Variable';
+    font-style: italic;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url('https://rsms.me/inter/font-files/InterVariable-Italic.woff2') format('woff2');
+    font-named-instance: 'Italic';
+  }
+}
+
+/* ==========================================================================
+   CSS Custom Properties - Typography Tokens
+   ========================================================================== */
+
+:root {
+  /* Perfect Fifth Scale (1.5 ratio) Base Values */
+  --typography-scale-ratio: 1.5;
+  --typography-base-size: 1rem; /* 16px */
+  
+  /* Perfect Fifth Scale - Size Tokens */
+  --font-size-xs: 0.75rem;      /* 12px - base ÷ 1.33 */
+  --font-size-sm: 0.875rem;     /* 14px - base ÷ 1.14 */
+  --font-size-base: 1rem;       /* 16px - base */
+  --font-size-lg: 1.125rem;     /* 18px - base × 1.125 */
+  --font-size-xl: 1.25rem;      /* 20px - base × 1.25 */
+  --font-size-2xl: 1.5rem;      /* 24px - base × 1.5 */
+  --font-size-3xl: 1.875rem;    /* 30px - base × 1.875 */
+  --font-size-4xl: 2.25rem;     /* 36px - base × 2.25 */
+  --font-size-5xl: 3rem;        /* 48px - base × 3 */
+
+  /* Fluid Typography - Responsive Scaling */
+  --font-size-xs-fluid: clamp(0.7rem, 0.65rem + 0.25vw, 0.75rem);
+  --font-size-sm-fluid: clamp(0.8rem, 0.75rem + 0.25vw, 0.875rem);
+  --font-size-base-fluid: clamp(0.9rem, 0.85rem + 0.3vw, 1rem);
+  --font-size-lg-fluid: clamp(1rem, 0.95rem + 0.35vw, 1.125rem);
+  --font-size-xl-fluid: clamp(1.1rem, 1rem + 0.4vw, 1.25rem);
+  --font-size-2xl-fluid: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+  --font-size-3xl-fluid: clamp(1.5rem, 1.25rem + 1.25vw, 1.875rem);
+  --font-size-4xl-fluid: clamp(1.75rem, 1.5rem + 1.5vw, 2.25rem);
+  --font-size-5xl-fluid: clamp(2rem, 1.75rem + 2vw, 3rem);
+
+  /* Line Height Scale - Optimized for Readability */
+  --line-height-none: 1;
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+  --line-height-loose: 2;
+
+  /* Letter Spacing - Optical Adjustments */
+  --letter-spacing-tighter: -0.05em;
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.05em;
+  --letter-spacing-widest: 0.1em;
+
+  /* Font Weight Scale */
+  --font-weight-thin: 100;
+  --font-weight-extralight: 200;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+
+  /* Font Family Stacks */
+  --font-family-ui: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-family-display: 'Inter Variable', 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+
+  /* Baseline Grid */
+  --baseline-unit: 0.25rem; /* 4px */
+  --baseline-grid: calc(var(--baseline-unit) * 6); /* 24px = 1.5rem */
+}
+
+/* ==========================================================================
+   Base Typography Styles
+   ========================================================================== */
+
+/* Base font optimization */
+html {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  hanging-punctuation: first last;
+}
+
+body {
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-base-fluid);
+  line-height: var(--line-height-normal);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: var(--letter-spacing-normal);
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "tnum" 1;
+}
+
+/* ==========================================================================
+   Typography Utility Classes
+   ========================================================================== */
+
+/* Font Size Classes with Perfect Fifth Scale */
+.text-xs { font-size: var(--font-size-xs); }
+.text-sm { font-size: var(--font-size-sm); }
+.text-base { font-size: var(--font-size-base); }
+.text-lg { font-size: var(--font-size-lg); }
+.text-xl { font-size: var(--font-size-xl); }
+.text-2xl { font-size: var(--font-size-2xl); }
+.text-3xl { font-size: var(--font-size-3xl); }
+.text-4xl { font-size: var(--font-size-4xl); }
+.text-5xl { font-size: var(--font-size-5xl); }
+
+/* Fluid Typography Classes */
+.text-xs-fluid { font-size: var(--font-size-xs-fluid); }
+.text-sm-fluid { font-size: var(--font-size-sm-fluid); }
+.text-base-fluid { font-size: var(--font-size-base-fluid); }
+.text-lg-fluid { font-size: var(--font-size-lg-fluid); }
+.text-xl-fluid { font-size: var(--font-size-xl-fluid); }
+.text-2xl-fluid { font-size: var(--font-size-2xl-fluid); }
+.text-3xl-fluid { font-size: var(--font-size-3xl-fluid); }
+.text-4xl-fluid { font-size: var(--font-size-4xl-fluid); }
+.text-5xl-fluid { font-size: var(--font-size-5xl-fluid); }
+
+/* Font Family Classes */
+.font-ui { font-family: var(--font-family-ui); }
+.font-display { font-family: var(--font-family-display); }
+.font-mono { font-family: var(--font-family-mono); }
+
+/* Line Height Classes */
+.leading-none { line-height: var(--line-height-none); }
+.leading-tight { line-height: var(--line-height-tight); }
+.leading-snug { line-height: var(--line-height-snug); }
+.leading-normal { line-height: var(--line-height-normal); }
+.leading-relaxed { line-height: var(--line-height-relaxed); }
+.leading-loose { line-height: var(--line-height-loose); }
+
+/* Letter Spacing Classes */
+.tracking-tighter { letter-spacing: var(--letter-spacing-tighter); }
+.tracking-tight { letter-spacing: var(--letter-spacing-tight); }
+.tracking-normal { letter-spacing: var(--letter-spacing-normal); }
+.tracking-wide { letter-spacing: var(--letter-spacing-wide); }
+.tracking-wider { letter-spacing: var(--letter-spacing-wider); }
+.tracking-widest { letter-spacing: var(--letter-spacing-widest); }
+
+/* Font Weight Classes */
+.font-thin { font-weight: var(--font-weight-thin); }
+.font-extralight { font-weight: var(--font-weight-extralight); }
+.font-light { font-weight: var(--font-weight-light); }
+.font-normal { font-weight: var(--font-weight-normal); }
+.font-medium { font-weight: var(--font-weight-medium); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold { font-weight: var(--font-weight-bold); }
+.font-extrabold { font-weight: var(--font-weight-extrabold); }
+.font-black { font-weight: var(--font-weight-black); }
+
+/* ==========================================================================
+   Advanced Typography Effects
+   ========================================================================== */
+
+/* Gradient Text Effect */
+.text-gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+}
+
+.text-gradient-earth {
+  background: linear-gradient(135deg, #b07c57 0%, #845638 50%, #6b4531 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-steel {
+  background: linear-gradient(135deg, #708090 0%, #5a6872 50%, #37474F 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Outlined Text Effect */
+.text-outline {
+  -webkit-text-stroke: 1px currentColor;
+  -webkit-text-fill-color: transparent;
+  text-stroke: 1px currentColor;
+  text-fill-color: transparent;
+}
+
+.text-outline-thin {
+  -webkit-text-stroke: 0.5px currentColor;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-outline-thick {
+  -webkit-text-stroke: 2px currentColor;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Variable Font Features */
+.font-feature-small-caps {
+  font-feature-settings: "smcp" 1;
+}
+
+.font-feature-oldstyle-nums {
+  font-feature-settings: "onum" 1;
+}
+
+.font-feature-tabular-nums {
+  font-feature-settings: "tnum" 1;
+}
+
+.font-feature-slashed-zero {
+  font-feature-settings: "zero" 1;
+}
+
+.font-feature-stylistic-alternates {
+  font-feature-settings: "salt" 1;
+}
+
+/* ==========================================================================
+   Semantic Typography Components
+   ========================================================================== */
+
+/* Headings with Optical Sizing */
+h1, .heading-1 {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-4xl-fluid);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  margin-bottom: var(--baseline-grid);
+}
+
+h2, .heading-2 {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-3xl-fluid);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  margin-bottom: calc(var(--baseline-grid) * 0.75);
+}
+
+h3, .heading-3 {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-2xl-fluid);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-snug);
+  letter-spacing: var(--letter-spacing-normal);
+  margin-bottom: calc(var(--baseline-grid) * 0.5);
+}
+
+h4, .heading-4 {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-xl-fluid);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-snug);
+  letter-spacing: var(--letter-spacing-normal);
+  margin-bottom: calc(var(--baseline-grid) * 0.5);
+}
+
+h5, .heading-5 {
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-lg-fluid);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  letter-spacing: var(--letter-spacing-normal);
+  margin-bottom: calc(var(--baseline-grid) * 0.5);
+}
+
+h6, .heading-6 {
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-base-fluid);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  margin-bottom: calc(var(--baseline-grid) * 0.5);
+}
+
+/* Body Text Variants */
+.text-body-large {
+  font-size: var(--font-size-lg-fluid);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--baseline-grid);
+}
+
+.text-body {
+  font-size: var(--font-size-base-fluid);
+  line-height: var(--line-height-normal);
+  margin-bottom: var(--baseline-grid);
+}
+
+.text-body-small {
+  font-size: var(--font-size-sm-fluid);
+  line-height: var(--line-height-normal);
+  margin-bottom: calc(var(--baseline-grid) * 0.75);
+}
+
+/* Code and Monospace */
+code, .text-code {
+  font-family: var(--font-family-mono);
+  font-size: 0.875em;
+  font-weight: var(--font-weight-medium);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  background-color: rgb(0 0 0 / 0.05);
+}
+
+pre code, .text-code-block {
+  display: block;
+  padding: 1rem;
+  overflow-x: auto;
+  background-color: rgb(0 0 0 / 0.03);
+  border-radius: 0.5rem;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+}
+
+/* ==========================================================================
+   Baseline Grid Utilities
+   ========================================================================== */
+
+.baseline-reset {
+  margin: 0;
+  padding: 0;
+}
+
+.baseline-margin {
+  margin-bottom: var(--baseline-grid);
+}
+
+.baseline-margin-sm {
+  margin-bottom: calc(var(--baseline-grid) * 0.5);
+}
+
+.baseline-margin-lg {
+  margin-bottom: calc(var(--baseline-grid) * 1.5);
+}
+
+.baseline-margin-xl {
+  margin-bottom: calc(var(--baseline-grid) * 2);
+}
+
+/* ==========================================================================
+   Responsive Typography Adjustments
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  :root {
+    --baseline-grid: 1rem; /* Smaller baseline on mobile */
+  }
+  
+  body {
+    font-size: var(--font-size-sm-fluid);
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --baseline-grid: 2rem; /* Larger baseline on desktop */
+  }
+}
+
+/* ==========================================================================
+   Print Optimization
+   ========================================================================== */
+
+@media print {
+  :root {
+    --font-size-base: 12pt;
+    --line-height-normal: 1.4;
+  }
+  
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    color: #000;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+  
+  p, blockquote, ul, ol {
+    orphans: 2;
+    widows: 2;
+  }
+}
+
+/* ==========================================================================
+   Dark Mode Typography Adjustments
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+  body {
+    font-weight: var(--font-weight-light); /* Slightly lighter weight for dark backgrounds */
+    letter-spacing: 0.01em; /* Slightly wider letter spacing for dark mode */
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: calc(var(--font-weight-normal) - 100); /* Reduce heading weight */
+  }
+}
+
+/* ==========================================================================
+   Accessibility Enhancements
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .text-gradient {
+    animation: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .text-gradient,
+  .text-gradient-earth,
+  .text-gradient-steel {
+    -webkit-text-fill-color: currentColor;
+    background: none;
+  }
+}
+
+/* Focus management for interactive text elements */
+.text-interactive {
+  transition: color 0.2s ease, font-weight 0.2s ease;
+}
+
+.text-interactive:hover {
+  font-weight: var(--font-weight-medium);
+}
+
+.text-interactive:focus {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   Performance Optimizations
+   ========================================================================== */
+
+/* Contain layout shifts during font loading */
+.font-loading {
+  font-display: swap;
+  size-adjust: 100%;
+}
+
+/* GPU acceleration for text animations */
+.text-animate {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}

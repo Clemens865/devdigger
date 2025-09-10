@@ -1,0 +1,467 @@
+/**
+ * DevDigger Advanced Layout System
+ * Gallery-Quality Design Patterns
+ * 
+ * This extends the core layout system with sophisticated patterns
+ * for professional, gallery-worthy layouts that impress designers.
+ * 
+ * Advanced Features:
+ * - Fluid typography and spacing scales
+ * - Visual rhythm management
+ * - Content flow optimization
+ * - Micro-layout patterns
+ * - Sophisticated whitespace control
+ */
+
+/* ================================
+   EXTENDED CUSTOM PROPERTIES
+   ================================ */
+
+:root {
+  /* Advanced Golden Ratio Calculations */
+  --phi: 1.618033988749;
+  --phi-2: 2.618033988749;  /* φ + 1 */
+  --phi-3: 4.236067977499;  /* φ² + φ */
+  --phi-inverse-2: 0.381966011251; /* 1/φ² */
+
+  /* Extended Fibonacci Sequence for Micro Layouts */
+  --space-micro: 1px;
+  --space-micro-2: 2px;
+  --space-micro-3: 3px;
+  --space-micro-5: 5px;
+  --space-xxs: 5px;    /* F₅ */
+  --space-xxxs: 3px;   /* F₄ */
+  --space-ultra: 233px; /* F₁₃ */
+  --space-mega: 377px;  /* F₁₄ */
+
+  /* Fluid Typography Scale (based on golden ratio) */
+  --type-ratio-minor: 1.125; /* Major Second */
+  --type-ratio-major: 1.25;  /* Major Third */
+  --type-ratio-perfect: 1.333; /* Perfect Fourth */
+  --type-ratio-golden: var(--phi); /* Golden Ratio */
+
+  /* Visual Rhythm Units */
+  --rhythm-base: 24px; /* Base line height */
+  --rhythm-half: 12px;
+  --rhythm-quarter: 6px;
+  --rhythm-double: 48px;
+  --rhythm-triple: 72px;
+
+  /* Advanced Grid Constants */
+  --grid-unit: 8px; /* Base grid unit */
+  --grid-half: 4px;
+  --grid-quarter: 2px;
+  --grid-double: 16px;
+
+  /* Content Measure (Optimal Reading Widths) */
+  --measure-narrow: 45ch;   /* Tight reading */
+  --measure-optimal: 65ch;  /* Perfect reading */
+  --measure-wide: 75ch;     /* Comfortable max */
+  --measure-ultra: 85ch;    /* Wide content */
+
+  /* Advanced Aspect Ratios */
+  --aspect-phi-wide: 2.618; /* φ + 1 for ultra-wide */
+  --aspect-phi-narrow: 1.272; /* √φ for balanced */
+  --aspect-iso: 1.414; /* √2 (ISO ratio) */
+  --aspect-classic: 1.5; /* 3:2 classical */
+
+  /* Layout Tension Points (Based on φ) */
+  --tension-primary: 61.8%;   /* Main focal area */
+  --tension-secondary: 38.2%; /* Supporting area */
+  --tension-tertiary: 23.6%;  /* Accent area */
+
+  /* Sophisticated Shadows */
+  --shadow-subtle: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-gentle: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-moderate: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-strong: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-dramatic: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+  /* Sophisticated Radius Scale */
+  --radius-micro: 2px;
+  --radius-subtle: 4px;
+  --radius-soft: 6px;
+  --radius-gentle: 8px;
+  --radius-moderate: 12px;
+  --radius-generous: 16px;
+  --radius-bold: 24px;
+  --radius-dramatic: 32px;
+}
+
+/* ================================
+   SOPHISTICATED LAYOUT PATTERNS
+   ================================ */
+
+/* Magazine Layout - Three Column with Optimal Proportions */
+.magazine-layout {
+  display: grid;
+  grid-template-columns: 
+    minmax(200px, var(--tension-secondary)) /* Sidebar */
+    minmax(400px, var(--tension-primary))  /* Main content */
+    minmax(150px, var(--tension-tertiary)); /* Aside */
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+/* Bento Box Layout - Modern Card Grid */
+.bento-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-auto-rows: minmax(200px, auto);
+  gap: var(--space-md);
+}
+
+.bento-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-lg);
+  border-radius: var(--radius-moderate);
+  background: white;
+  box-shadow: var(--shadow-gentle);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bento-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-moderate);
+}
+
+/* Feature variants */
+.bento-item.large { grid-column: span 2; }
+.bento-item.tall { grid-row: span 2; }
+.bento-item.hero { grid-column: span 2; grid-row: span 2; }
+
+/* Swiss Layout - Minimal Grid System */
+.swiss-layout {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(auto-fit, minmax(var(--rhythm-base), auto));
+  gap: var(--grid-unit);
+  line-height: var(--rhythm-base);
+}
+
+/* Asymmetric Grid - Dynamic Proportions */
+.asymmetric-grid {
+  display: grid;
+  grid-template-columns: 
+    var(--tension-tertiary) 
+    var(--tension-primary) 
+    var(--tension-secondary);
+  grid-template-rows: auto auto auto;
+  gap: var(--space-lg);
+  min-height: 100vh;
+}
+
+/* Gallery Layout - Perfect Image Presentation */
+.gallery-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-md);
+  padding: var(--space-lg);
+}
+
+.gallery-item {
+  position: relative;
+  aspect-ratio: var(--aspect-golden);
+  border-radius: var(--radius-gentle);
+  overflow: hidden;
+  box-shadow: var(--shadow-gentle);
+  transition: all 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-strong);
+}
+
+/* Content Flow Layouts */
+.content-river {
+  max-width: var(--measure-optimal);
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-md);
+  line-height: var(--rhythm-base);
+}
+
+.content-river > * + * {
+  margin-top: var(--rhythm-base);
+}
+
+.content-river h1 { margin-top: var(--rhythm-double); }
+.content-river h2 { margin-top: var(--rhythm-triple); }
+.content-river h3 { margin-top: var(--rhythm-double); }
+
+/* ================================
+   MICRO-LAYOUT PATTERNS
+   ================================ */
+
+/* Perfect Card Layouts */
+.card-pristine {
+  background: white;
+  border-radius: var(--radius-moderate);
+  box-shadow: var(--shadow-gentle);
+  padding: var(--space-lg);
+  transition: all 0.2s ease;
+}
+
+.card-pristine:hover {
+  box-shadow: var(--shadow-moderate);
+  transform: translateY(-1px);
+}
+
+.card-luxurious {
+  background: white;
+  border-radius: var(--radius-generous);
+  box-shadow: var(--shadow-subtle);
+  padding: var(--space-xl);
+  border: 1px solid rgb(0 0 0 / 0.04);
+}
+
+.card-minimal {
+  background: white;
+  border-radius: var(--radius-soft);
+  padding: var(--space-lg);
+  border: 1px solid rgb(0 0 0 / 0.08);
+}
+
+/* Stack Layouts */
+.stack-tight > * + * { margin-top: var(--space-xs); }
+.stack-comfortable > * + * { margin-top: var(--space-md); }
+.stack-generous > * + * { margin-top: var(--space-lg); }
+.stack-luxurious > * + * { margin-top: var(--space-xl); }
+
+/* Cluster Layouts (Horizontal Groups) */
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.cluster.center { justify-content: center; }
+.cluster.end { justify-content: flex-end; }
+.cluster.between { justify-content: space-between; }
+
+/* Sidebar Layouts with Perfect Proportions */
+.sidebar-golden {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+}
+
+.sidebar-golden > :first-child {
+  flex-basis: calc(var(--tension-secondary) * 100% - var(--space-lg) / 2);
+  flex-grow: 1;
+}
+
+.sidebar-golden > :last-child {
+  flex-basis: calc(var(--tension-primary) * 100% - var(--space-lg) / 2);
+  flex-grow: 999;
+  min-width: 400px;
+}
+
+/* ================================
+   ADVANCED SPACING UTILITIES
+   ================================ */
+
+/* Rhythm-based Spacing */
+.space-rhythm { margin-bottom: var(--rhythm-base); }
+.space-rhythm-half { margin-bottom: var(--rhythm-half); }
+.space-rhythm-double { margin-bottom: var(--rhythm-double); }
+.space-rhythm-triple { margin-bottom: var(--rhythm-triple); }
+
+/* Optical Spacing Adjustments */
+.optical-small { margin-top: -0.05em; }
+.optical-medium { margin-top: -0.08em; }
+.optical-large { margin-top: -0.12em; }
+
+/* Content Measure Control */
+.measure-narrow { max-width: var(--measure-narrow); }
+.measure-optimal { max-width: var(--measure-optimal); }
+.measure-wide { max-width: var(--measure-wide); }
+.measure-ultra { max-width: var(--measure-ultra); }
+
+/* ================================
+   FLUID RESPONSIVE SYSTEM
+   ================================ */
+
+/* Fluid Grid that Scales Perfectly */
+.fluid-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(
+    clamp(280px, 30vw, 400px), 1fr
+  ));
+  gap: clamp(var(--space-md), 3vw, var(--space-xl));
+}
+
+/* Fluid Typography Scale */
+.fluid-type-sm { font-size: clamp(0.875rem, 0.8rem + 0.5vw, 1rem); }
+.fluid-type-base { font-size: clamp(1rem, 0.9rem + 0.5vw, 1.125rem); }
+.fluid-type-lg { font-size: clamp(1.125rem, 1rem + 0.75vw, 1.375rem); }
+.fluid-type-xl { font-size: clamp(1.25rem, 1.1rem + 1vw, 1.75rem); }
+.fluid-type-2xl { font-size: clamp(1.5rem, 1.3rem + 1.5vw, 2.25rem); }
+.fluid-type-3xl { font-size: clamp(1.875rem, 1.5rem + 2vw, 3rem); }
+
+/* Fluid Spacing */
+.fluid-space-sm { padding: clamp(var(--space-sm), 2vw, var(--space-md)); }
+.fluid-space-md { padding: clamp(var(--space-md), 3vw, var(--space-lg)); }
+.fluid-space-lg { padding: clamp(var(--space-lg), 4vw, var(--space-xl)); }
+.fluid-space-xl { padding: clamp(var(--space-xl), 5vw, var(--space-2xl)); }
+
+/* ================================
+   VISUAL HIERARCHY UTILITIES
+   ================================ */
+
+/* Emphasis Levels */
+.emphasis-subtle { opacity: 0.7; }
+.emphasis-moderate { opacity: 0.85; }
+.emphasis-strong { opacity: 1; font-weight: 600; }
+.emphasis-dramatic { opacity: 1; font-weight: 700; color: var(--color-accent); }
+
+/* Layering System */
+.layer-base { z-index: 0; }
+.layer-raised { z-index: 1; transform: translateZ(0); }
+.layer-floating { z-index: 2; box-shadow: var(--shadow-gentle); }
+.layer-elevated { z-index: 3; box-shadow: var(--shadow-moderate); }
+.layer-overlay { z-index: 10; box-shadow: var(--shadow-strong); }
+
+/* ================================
+   ADVANCED RESPONSIVE PATTERNS
+   ================================ */
+
+/* Container Queries Support */
+@container (min-width: 320px) {
+  .container-sm .bento-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@container (min-width: 640px) {
+  .container-md .bento-layout {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@container (min-width: 960px) {
+  .container-lg .bento-layout {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Responsive Layout Patterns */
+@media (max-width: 767px) {
+  .magazine-layout,
+  .asymmetric-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+  
+  .sidebar-golden {
+    flex-direction: column;
+  }
+  
+  .sidebar-golden > * {
+    flex-basis: auto;
+    min-width: auto;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .magazine-layout {
+    grid-template-columns: 
+      minmax(200px, 1fr) 
+      minmax(400px, 2fr);
+  }
+  
+  .magazine-layout > :last-child {
+    grid-column: 1 / -1;
+    margin-top: var(--space-lg);
+  }
+}
+
+/* ================================
+   PERFORMANCE OPTIMIZATIONS
+   ================================ */
+
+/* Hardware Acceleration */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Smooth Scrolling */
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+/* Content Visibility */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
+/* ================================
+   PRINT OPTIMIZATIONS
+   ================================ */
+
+@media print {
+  .magazine-layout,
+  .bento-layout,
+  .asymmetric-grid {
+    display: block;
+  }
+  
+  .bento-item {
+    page-break-inside: avoid;
+    margin-bottom: var(--space-lg);
+  }
+  
+  .gallery-layout {
+    display: block;
+    columns: 2;
+    column-gap: var(--space-lg);
+  }
+  
+  .gallery-item {
+    break-inside: avoid;
+    margin-bottom: var(--space-md);
+  }
+}
+
+/* ================================
+   ACCESSIBILITY ENHANCEMENTS
+   ================================ */
+
+/* Focus Indicators */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-subtle);
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .bento-item,
+  .gallery-item,
+  .card-pristine,
+  .card-luxurious {
+    transition: none;
+  }
+  
+  .bento-item:hover,
+  .gallery-item:hover,
+  .card-pristine:hover {
+    transform: none;
+  }
+}
+
+/* High Contrast Support */
+@media (prefers-contrast: high) {
+  .card-pristine,
+  .card-luxurious,
+  .card-minimal {
+    border: 2px solid;
+    box-shadow: none;
+  }
+}

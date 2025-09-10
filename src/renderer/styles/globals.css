@@ -1,0 +1,293 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Typography System */
+@import './typography.css';
+
+/* Import Sophisticated Color System */
+@import '../design-system/colors.css';
+
+@layer base {
+  body {
+    @apply bg-neutral-50 text-neutral-900 antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+      sans-serif;
+    background-image: 
+      radial-gradient(circle at 20% 50%, rgba(224, 164, 53, 0.02) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(53, 129, 224, 0.01) 0%, transparent 50%);
+  }
+
+  /* Subtle noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.03;
+    z-index: 1;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  /* Minimal scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-1 h-1;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-neutral-300 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-neutral-400;
+  }
+}
+
+@layer components {
+  /* Ethereal card - minimal with subtle shadow */
+  .ethereal-card {
+    @apply bg-white/70 backdrop-blur-sm rounded-none shadow-sm;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Ghost button - almost invisible until hover */
+  .btn-ghost {
+    @apply relative text-neutral-600 transition-all duration-500;
+    letter-spacing: 0.05em;
+  }
+
+  .btn-ghost:hover {
+    @apply text-neutral-900;
+  }
+
+  .btn-ghost::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--oracle-500), transparent);
+    transition: width 0.5s ease;
+  }
+
+  .btn-ghost:hover::after {
+    width: 100%;
+  }
+
+  /* Oracle button - the primary action */
+  .btn-oracle {
+    @apply relative overflow-hidden text-white;
+    background: var(--oracle-gradient-primary);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%);
+  }
+
+  .btn-oracle:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-oracle);
+    background: linear-gradient(135deg, var(--oracle-500), var(--oracle-700));
+  }
+
+  .btn-oracle:active {
+    transform: translateY(0);
+    background: linear-gradient(135deg, var(--oracle-600), var(--oracle-800));
+  }
+
+  /* Mystical input fields */
+  .input-mystical {
+    @apply bg-transparent border-0 border-b border-neutral-200 rounded-none;
+    @apply focus:outline-none focus:border-neutral-400;
+    @apply placeholder-neutral-300 text-neutral-700;
+    transition: all 0.3s ease;
+  }
+
+  .input-mystical:focus {
+    border-bottom-width: 2px;
+    margin-bottom: -1px;
+  }
+
+  /* Geometric frame */
+  .geometric-frame {
+    @apply relative;
+  }
+
+  .geometric-frame::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background: linear-gradient(45deg, transparent 30%, rgba(0,0,0,0.1) 50%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+  }
+
+  .geometric-frame:hover::before {
+    opacity: 1;
+  }
+
+  /* Hooded figure container */
+  .oracle-presence {
+    @apply relative;
+    filter: contrast(1.1);
+  }
+
+  .oracle-presence::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(224, 164, 53, 0.05) 0%, transparent 70%);
+    animation: pulse-slow 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  /* Data visualization layers */
+  .data-layer {
+    @apply relative overflow-hidden;
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.01) 100%);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .data-layer-active {
+    border-color: rgba(224, 164, 53, 0.3);
+    background: linear-gradient(180deg, rgba(224, 164, 53, 0.02) 0%, transparent 100%);
+  }
+
+  /* Glitch text effect for special moments */
+  @keyframes glitch {
+    0%, 100% { 
+      text-shadow: 0 0 0 transparent;
+      transform: translate(0);
+    }
+    20% {
+      text-shadow: -2px 0 var(--oracle-500);
+      transform: translate(2px, 0);
+    }
+    40% {
+      text-shadow: 2px 0 #000;
+      transform: translate(-2px, 0);
+    }
+  }
+
+  .glitch-text {
+    animation: glitch 3s infinite;
+    animation-play-state: paused;
+  }
+
+  .glitch-text:hover {
+    animation-play-state: running;
+  }
+
+  /* Minimalist navigation */
+  .nav-minimal {
+    @apply flex items-center gap-8;
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .nav-minimal a {
+    @apply text-neutral-400 hover:text-neutral-900 transition-colors duration-300;
+    position: relative;
+  }
+
+  .nav-minimal a.active {
+    @apply text-neutral-900;
+  }
+
+  .nav-minimal a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background: var(--oracle-500);
+    border-radius: 50%;
+  }
+
+  /* Sacred geometry patterns */
+  .sacred-geometry {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.03;
+    pointer-events: none;
+    background-image: 
+      repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(0,0,0,0.03) 50px, rgba(0,0,0,0.03) 51px),
+      repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(0,0,0,0.03) 50px, rgba(0,0,0,0.03) 51px);
+  }
+
+  /* Loading states */
+  .oracle-loading {
+    position: relative;
+    color: transparent;
+  }
+
+  .oracle-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(224, 164, 53, 0.2);
+    border-top-color: var(--oracle-500);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+  }
+}
+
+@layer utilities {
+  /* Minimalist text styles */
+  .text-label {
+    @apply text-xs uppercase tracking-wider text-neutral-400;
+  }
+
+  .text-oracle {
+    @apply bg-gradient-to-r from-orange-600 to-orange-500 bg-clip-text text-transparent;
+  }
+
+  /* Subtle shadows */
+  .shadow-ethereal {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .shadow-oracle {
+    box-shadow: var(--shadow-oracle);
+  }
+
+  /* Hover lift effect */
+  .hover-lift {
+    @apply transition-transform duration-300;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-2px);
+  }
+}

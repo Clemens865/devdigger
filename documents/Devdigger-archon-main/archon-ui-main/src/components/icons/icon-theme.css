@@ -1,0 +1,294 @@
+/**
+ * DevDigger Icon Theme System
+ * 
+ * CSS custom properties and theming support for the icon system.
+ * Provides consistent styling across light/dark themes with mystical enhancements.
+ */
+
+@layer components {
+  /* Icon Size System */
+  .icon-xs { width: 16px; height: 16px; }
+  .icon-sm { width: 20px; height: 20px; }
+  .icon-md { width: 24px; height: 24px; }
+  .icon-lg { width: 32px; height: 32px; }
+  .icon-xl { width: 48px; height: 48px; }
+
+  /* Icon Style Variants */
+  .icon-outline {
+    @apply stroke-current fill-none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .icon-filled {
+    @apply fill-current stroke-none;
+  }
+
+  .icon-duotone {
+    @apply fill-current stroke-current;
+    stroke-width: 1;
+    
+    & > path:first-child {
+      @apply opacity-60;
+    }
+    
+    & > path:last-child {
+      @apply opacity-40;
+    }
+  }
+
+  .icon-gradient {
+    @apply stroke-none;
+    fill: url(#devdigger-icon-gradient);
+  }
+
+  /* Icon Animation Classes */
+  .icon-animate {
+    @apply transition-all duration-200;
+    
+    &:hover {
+      @apply scale-110;
+      transform: scale(1.1) rotate(1deg);
+    }
+  }
+
+  .icon-pulse {
+    animation: icon-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .icon-spin {
+    animation: icon-spin 1s linear infinite;
+  }
+
+  .icon-bounce {
+    animation: icon-bounce 1s infinite;
+  }
+
+  .icon-glow {
+    filter: drop-shadow(0 0 8px rgba(var(--primary-rgb), 0.5));
+    
+    &:hover {
+      filter: drop-shadow(0 0 12px rgba(var(--primary-rgb), 0.7));
+    }
+  }
+
+  .icon-mystical {
+    filter: 
+      drop-shadow(0 0 4px rgba(var(--primary-rgb), 0.3))
+      drop-shadow(0 0 8px rgba(var(--accent-rgb), 0.2));
+    
+    &:hover {
+      filter: 
+        drop-shadow(0 0 6px rgba(var(--primary-rgb), 0.5))
+        drop-shadow(0 0 12px rgba(var(--accent-rgb), 0.3))
+        drop-shadow(0 0 18px rgba(var(--primary-rgb), 0.1));
+    }
+  }
+
+  /* Context-based Icon Colors */
+  .icon-primary {
+    @apply text-blue-600 dark:text-blue-400;
+  }
+
+  .icon-secondary {
+    @apply text-gray-500 dark:text-zinc-400;
+  }
+
+  .icon-accent {
+    color: hsl(var(--accent));
+  }
+
+  .icon-success {
+    @apply text-green-600 dark:text-green-400;
+  }
+
+  .icon-warning {
+    @apply text-yellow-600 dark:text-yellow-400;
+  }
+
+  .icon-error {
+    @apply text-red-600 dark:text-red-400;
+  }
+
+  .icon-info {
+    @apply text-blue-600 dark:text-blue-400;
+  }
+
+  /* Oracle Theme Specific */
+  .icon-oracle {
+    color: hsl(271 91% 65%);
+    filter: drop-shadow(0 0 6px hsla(271, 91%, 65%, 0.4));
+    
+    &:hover {
+      filter: drop-shadow(0 0 10px hsla(271, 91%, 65%, 0.6));
+    }
+  }
+
+  .icon-mystical-flame {
+    color: hsl(30 90% 65%);
+    filter: 
+      drop-shadow(0 0 4px hsla(30, 90%, 65%, 0.5))
+      drop-shadow(0 0 8px hsla(15, 90%, 65%, 0.3));
+    
+    &:hover {
+      filter: 
+        drop-shadow(0 0 6px hsla(30, 90%, 65%, 0.7))
+        drop-shadow(0 0 12px hsla(15, 90%, 65%, 0.5))
+        drop-shadow(0 0 18px hsla(0, 90%, 65%, 0.3));
+    }
+  }
+
+  .icon-crystal {
+    color: hsl(190 80% 60%);
+    filter: 
+      drop-shadow(0 0 4px hsla(190, 80%, 60%, 0.4))
+      drop-shadow(0 0 8px hsla(200, 80%, 70%, 0.2));
+    
+    &:hover {
+      filter: 
+        drop-shadow(0 0 6px hsla(190, 80%, 60%, 0.6))
+        drop-shadow(0 0 12px hsla(200, 80%, 70%, 0.4));
+    }
+  }
+
+  .icon-wisdom {
+    color: hsl(280 70% 70%);
+    filter: drop-shadow(0 0 6px hsla(280, 70%, 70%, 0.4));
+    
+    &:hover {
+      filter: drop-shadow(0 0 10px hsla(280, 70%, 70%, 0.6));
+    }
+  }
+
+  /* Interactive States */
+  .icon-interactive {
+    @apply transition-all duration-200 cursor-pointer;
+    
+    &:hover {
+      @apply scale-105;
+      filter: drop-shadow(0 0 8px rgba(var(--primary-rgb), 0.3));
+    }
+    
+    &:active {
+      @apply scale-95;
+    }
+  }
+
+  /* Loading State */
+  .icon-loading {
+    opacity: 0.6;
+    animation: icon-pulse 1.5s ease-in-out infinite;
+  }
+
+  /* Disabled State */
+  .icon-disabled {
+    @apply opacity-40 cursor-not-allowed;
+    filter: grayscale(100%);
+  }
+
+  /* Size-specific stroke weights for optical balance */
+  .icon-xs.icon-outline { stroke-width: 1.8; }
+  .icon-sm.icon-outline { stroke-width: 1.6; }
+  .icon-md.icon-outline { stroke-width: 1.5; }
+  .icon-lg.icon-outline { stroke-width: 1.4; }
+  .icon-xl.icon-outline { stroke-width: 1.2; }
+}
+
+/* Keyframe Animations */
+@keyframes icon-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes icon-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes icon-bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40%, 43% {
+    transform: translate3d(0, -10px, 0);
+  }
+  70% {
+    transform: translate3d(0, -5px, 0);
+  }
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+/* Gradient Definitions */
+@layer utilities {
+  .icon-gradient-primary {
+    fill: url(#gradient-primary);
+  }
+  
+  .icon-gradient-mystical {
+    fill: url(#gradient-mystical);
+  }
+  
+  .icon-gradient-oracle {
+    fill: url(#gradient-oracle);
+  }
+}
+
+/* SVG Gradient Definitions - To be included in the app */
+.icon-gradients {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .icon-mystical {
+    filter: 
+      drop-shadow(0 0 6px rgba(var(--primary-rgb), 0.4))
+      drop-shadow(0 0 12px rgba(var(--accent-rgb), 0.3));
+    
+    &:hover {
+      filter: 
+        drop-shadow(0 0 8px rgba(var(--primary-rgb), 0.6))
+        drop-shadow(0 0 16px rgba(var(--accent-rgb), 0.4))
+        drop-shadow(0 0 24px rgba(var(--primary-rgb), 0.2));
+    }
+  }
+  
+  .icon-glow {
+    filter: drop-shadow(0 0 10px rgba(var(--primary-rgb), 0.6));
+    
+    &:hover {
+      filter: drop-shadow(0 0 16px rgba(var(--primary-rgb), 0.8));
+    }
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .icon-animate,
+  .icon-pulse,
+  .icon-spin,
+  .icon-bounce,
+  .icon-interactive {
+    animation: none;
+    transition: none;
+  }
+  
+  .icon-animate:hover,
+  .icon-interactive:hover {
+    transform: none;
+  }
+}

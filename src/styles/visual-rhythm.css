@@ -1,0 +1,476 @@
+/**
+ * DevDigger Visual Rhythm & Proportion System
+ * Mathematical Harmony for Gallery-Quality Layouts
+ * 
+ * This system implements sophisticated visual rhythm based on:
+ * - Musical intervals and mathematical ratios
+ * - Typographic scales and baseline grids
+ * - Golden ratio and Fibonacci proportions
+ * - Optical adjustments and fine-tuning
+ */
+
+/* ================================
+   MATHEMATICAL FOUNDATION
+   ================================ */
+
+:root {
+  /* Musical Interval Ratios */
+  --ratio-unison: 1;           /* 1:1 */
+  --ratio-minor-second: 1.067; /* 16:15 */
+  --ratio-major-second: 1.125; /* 9:8 */
+  --ratio-minor-third: 1.2;    /* 6:5 */
+  --ratio-major-third: 1.25;   /* 5:4 */
+  --ratio-perfect-fourth: 1.333; /* 4:3 */
+  --ratio-tritone: 1.414;      /* √2 */
+  --ratio-perfect-fifth: 1.5;  /* 3:2 */
+  --ratio-minor-sixth: 1.6;    /* 8:5 */
+  --ratio-golden: 1.618;       /* φ */
+  --ratio-minor-seventh: 1.778; /* 16:9 */
+  --ratio-major-seventh: 1.875; /* 15:8 */
+  --ratio-octave: 2;           /* 2:1 */
+
+  /* Baseline Grid System */
+  --baseline-unit: 24px;       /* Base rhythm unit */
+  --baseline-small: 20px;      /* Tight rhythm */
+  --baseline-large: 28px;      /* Relaxed rhythm */
+  --baseline-display: 32px;    /* Display rhythm */
+
+  /* Rhythm Multipliers */
+  --rhythm-eighth: calc(var(--baseline-unit) * 0.125);  /* 3px */
+  --rhythm-quarter: calc(var(--baseline-unit) * 0.25);  /* 6px */
+  --rhythm-half: calc(var(--baseline-unit) * 0.5);      /* 12px */
+  --rhythm-base: var(--baseline-unit);                   /* 24px */
+  --rhythm-double: calc(var(--baseline-unit) * 2);       /* 48px */
+  --rhythm-triple: calc(var(--baseline-unit) * 3);       /* 72px */
+  --rhythm-quad: calc(var(--baseline-unit) * 4);         /* 96px */
+
+  /* Optical Adjustments */
+  --optical-small: -0.03em;    /* Small text needs lifting */
+  --optical-medium: -0.05em;   /* Medium text adjustment */
+  --optical-large: -0.08em;    /* Large text needs more */
+  --optical-display: -0.12em;  /* Display text maximum */
+
+  /* Proportional Spacing Scale */
+  --proportion-xs: 0.5rem;     /* 8px */
+  --proportion-sm: 0.75rem;    /* 12px */
+  --proportion-md: 1rem;       /* 16px */
+  --proportion-lg: 1.5rem;     /* 24px - baseline */
+  --proportion-xl: 2rem;       /* 32px */
+  --proportion-2xl: 3rem;      /* 48px - double baseline */
+  --proportion-3xl: 4rem;      /* 64px */
+  --proportion-4xl: 6rem;      /* 96px - quad baseline */
+
+  /* Golden Section Points */
+  --golden-major: 61.8%;       /* φ/(1+φ) */
+  --golden-minor: 38.2%;       /* 1/(1+φ) */
+  --golden-accent: 23.6%;      /* 1/φ² */
+
+  /* Tension Points for Layout */
+  --tension-strong: 23.6%;     /* High visual weight */
+  --tension-medium: 38.2%;     /* Balanced weight */
+  --tension-weak: 61.8%;       /* Supporting weight */
+}
+
+/* ================================
+   BASELINE GRID UTILITIES
+   ================================ */
+
+/* Apply baseline grid to containers */
+.baseline-grid {
+  background-image: 
+    linear-gradient(
+      to bottom, 
+      rgba(255, 0, 0, 0.1) 1px, 
+      transparent 1px
+    );
+  background-size: 100% var(--baseline-unit);
+  background-position: 0 0;
+}
+
+/* Baseline rhythm enforcement */
+.rhythm-container > * {
+  margin-bottom: var(--rhythm-base);
+  line-height: var(--baseline-unit);
+}
+
+.rhythm-container > *:last-child {
+  margin-bottom: 0;
+}
+
+/* Rhythm variants */
+.rhythm-tight > * {
+  margin-bottom: var(--rhythm-half);
+  line-height: var(--baseline-small);
+}
+
+.rhythm-comfortable > * {
+  margin-bottom: var(--rhythm-base);
+  line-height: var(--baseline-unit);
+}
+
+.rhythm-relaxed > * {
+  margin-bottom: var(--rhythm-double);
+  line-height: var(--baseline-large);
+}
+
+.rhythm-luxurious > * {
+  margin-bottom: var(--rhythm-triple);
+  line-height: var(--baseline-display);
+}
+
+/* ================================
+   TYPOGRAPHIC RHYTHM SYSTEM
+   ================================ */
+
+/* Heading Rhythm (Based on Musical Intervals) */
+.heading-rhythm h1 {
+  font-size: calc(var(--ratio-octave) * 1rem);
+  line-height: calc(var(--rhythm-base) * 2);
+  margin-top: calc(var(--rhythm-base) * 3);
+  margin-bottom: var(--rhythm-base);
+  margin-top: var(--optical-display);
+}
+
+.heading-rhythm h2 {
+  font-size: calc(var(--ratio-perfect-fifth) * 1rem);
+  line-height: calc(var(--rhythm-base) * 1.5);
+  margin-top: calc(var(--rhythm-base) * 2);
+  margin-bottom: var(--rhythm-half);
+  margin-top: var(--optical-large);
+}
+
+.heading-rhythm h3 {
+  font-size: calc(var(--ratio-perfect-fourth) * 1rem);
+  line-height: var(--rhythm-base);
+  margin-top: var(--rhythm-double);
+  margin-bottom: var(--rhythm-half);
+  margin-top: var(--optical-medium);
+}
+
+.heading-rhythm h4 {
+  font-size: calc(var(--ratio-major-third) * 1rem);
+  line-height: var(--rhythm-base);
+  margin-top: var(--rhythm-base);
+  margin-bottom: var(--rhythm-quarter);
+  margin-top: var(--optical-small);
+}
+
+.heading-rhythm h5 {
+  font-size: calc(var(--ratio-major-second) * 1rem);
+  line-height: var(--rhythm-base);
+  margin-top: var(--rhythm-base);
+  margin-bottom: var(--rhythm-quarter);
+}
+
+.heading-rhythm h6 {
+  font-size: var(--ratio-unison);
+  line-height: var(--rhythm-base);
+  margin-top: var(--rhythm-base);
+  margin-bottom: var(--rhythm-quarter);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Body Text Rhythm */
+.text-rhythm p {
+  margin-bottom: var(--rhythm-base);
+  line-height: var(--rhythm-base);
+  font-size: 1rem;
+}
+
+.text-rhythm ul,
+.text-rhythm ol {
+  margin-bottom: var(--rhythm-base);
+  margin-left: var(--rhythm-base);
+}
+
+.text-rhythm li {
+  line-height: var(--rhythm-base);
+  margin-bottom: var(--rhythm-quarter);
+}
+
+.text-rhythm blockquote {
+  margin: var(--rhythm-double) 0;
+  padding-left: var(--rhythm-base);
+  border-left: 4px solid currentColor;
+  opacity: 0.8;
+  font-style: italic;
+}
+
+/* ================================
+   PROPORTIONAL SPACING SYSTEM
+   ================================ */
+
+/* Margin Proportions */
+.margin-golden-major { margin: var(--golden-major); }
+.margin-golden-minor { margin: var(--golden-minor); }
+.margin-proportion-xs { margin: var(--proportion-xs); }
+.margin-proportion-sm { margin: var(--proportion-sm); }
+.margin-proportion-md { margin: var(--proportion-md); }
+.margin-proportion-lg { margin: var(--proportion-lg); }
+.margin-proportion-xl { margin: var(--proportion-xl); }
+.margin-proportion-2xl { margin: var(--proportion-2xl); }
+.margin-proportion-3xl { margin: var(--proportion-3xl); }
+.margin-proportion-4xl { margin: var(--proportion-4xl); }
+
+/* Directional Proportional Margins */
+.mt-proportion-xs { margin-top: var(--proportion-xs); }
+.mt-proportion-sm { margin-top: var(--proportion-sm); }
+.mt-proportion-md { margin-top: var(--proportion-md); }
+.mt-proportion-lg { margin-top: var(--proportion-lg); }
+.mt-proportion-xl { margin-top: var(--proportion-xl); }
+.mt-proportion-2xl { margin-top: var(--proportion-2xl); }
+.mt-proportion-3xl { margin-top: var(--proportion-3xl); }
+
+.mb-proportion-xs { margin-bottom: var(--proportion-xs); }
+.mb-proportion-sm { margin-bottom: var(--proportion-sm); }
+.mb-proportion-md { margin-bottom: var(--proportion-md); }
+.mb-proportion-lg { margin-bottom: var(--proportion-lg); }
+.mb-proportion-xl { margin-bottom: var(--proportion-xl); }
+.mb-proportion-2xl { margin-bottom: var(--proportion-2xl); }
+.mb-proportion-3xl { margin-bottom: var(--proportion-3xl); }
+
+/* Padding Proportions */
+.padding-proportion-xs { padding: var(--proportion-xs); }
+.padding-proportion-sm { padding: var(--proportion-sm); }
+.padding-proportion-md { padding: var(--proportion-md); }
+.padding-proportion-lg { padding: var(--proportion-lg); }
+.padding-proportion-xl { padding: var(--proportion-xl); }
+.padding-proportion-2xl { padding: var(--proportion-2xl); }
+
+.px-proportion-xs { padding-left: var(--proportion-xs); padding-right: var(--proportion-xs); }
+.px-proportion-sm { padding-left: var(--proportion-sm); padding-right: var(--proportion-sm); }
+.px-proportion-md { padding-left: var(--proportion-md); padding-right: var(--proportion-md); }
+.px-proportion-lg { padding-left: var(--proportion-lg); padding-right: var(--proportion-lg); }
+.px-proportion-xl { padding-left: var(--proportion-xl); padding-right: var(--proportion-xl); }
+
+.py-proportion-xs { padding-top: var(--proportion-xs); padding-bottom: var(--proportion-xs); }
+.py-proportion-sm { padding-top: var(--proportion-sm); padding-bottom: var(--proportion-sm); }
+.py-proportion-md { padding-top: var(--proportion-md); padding-bottom: var(--proportion-md); }
+.py-proportion-lg { padding-top: var(--proportion-lg); padding-bottom: var(--proportion-lg); }
+.py-proportion-xl { padding-top: var(--proportion-xl); padding-bottom: var(--proportion-xl); }
+
+/* ================================
+   LAYOUT PROPORTION UTILITIES
+   ================================ */
+
+/* Golden Ratio Layout Helpers */
+.width-golden-major { width: var(--golden-major); }
+.width-golden-minor { width: var(--golden-minor); }
+.height-golden-major { height: var(--golden-major); }
+.height-golden-minor { height: var(--golden-minor); }
+
+/* Tension Point Positioning */
+.top-tension-strong { top: var(--tension-strong); }
+.top-tension-medium { top: var(--tension-medium); }
+.top-tension-weak { top: var(--tension-weak); }
+
+.left-tension-strong { left: var(--tension-strong); }
+.left-tension-medium { left: var(--tension-medium); }
+.left-tension-weak { left: var(--tension-weak); }
+
+/* Aspect Ratio Utilities */
+.aspect-golden-wide { aspect-ratio: var(--ratio-golden); }
+.aspect-golden-tall { aspect-ratio: calc(1 / var(--ratio-golden)); }
+.aspect-fourth { aspect-ratio: var(--ratio-perfect-fourth); }
+.aspect-fifth { aspect-ratio: var(--ratio-perfect-fifth); }
+.aspect-octave { aspect-ratio: var(--ratio-octave); }
+
+/* ================================
+   VISUAL WEIGHT SYSTEM
+   ================================ */
+
+/* Weight classes for visual hierarchy */
+.weight-feather {
+  opacity: 0.4;
+  font-weight: 300;
+  transform: scale(0.95);
+}
+
+.weight-light {
+  opacity: 0.6;
+  font-weight: 400;
+  transform: scale(0.98);
+}
+
+.weight-normal {
+  opacity: 0.8;
+  font-weight: 500;
+  transform: scale(1);
+}
+
+.weight-medium {
+  opacity: 0.9;
+  font-weight: 600;
+  transform: scale(1.02);
+}
+
+.weight-bold {
+  opacity: 1;
+  font-weight: 700;
+  transform: scale(1.05);
+}
+
+.weight-heavy {
+  opacity: 1;
+  font-weight: 800;
+  transform: scale(1.08);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* ================================
+   RHYTHM DEBUGGING TOOLS
+   ================================ */
+
+/* Baseline grid overlay (development only) */
+.debug-baseline {
+  position: relative;
+}
+
+.debug-baseline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(
+      to bottom,
+      rgba(255, 0, 0, 0.1) 1px,
+      transparent 1px
+    );
+  background-size: 100% var(--baseline-unit);
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Golden ratio guides */
+.debug-golden {
+  position: relative;
+}
+
+.debug-golden::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--golden-minor);
+  width: 2px;
+  height: 100%;
+  background: rgba(255, 215, 0, 0.5);
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* Rhythm markers */
+.debug-rhythm * {
+  outline: 1px solid rgba(0, 255, 0, 0.2);
+  background: rgba(0, 255, 0, 0.05);
+}
+
+/* ================================
+   RESPONSIVE RHYTHM SCALING
+   ================================ */
+
+/* Scale rhythm based on viewport */
+@media (max-width: 31.9375rem) { /* Mobile */
+  :root {
+    --baseline-unit: 20px;
+    --baseline-small: 18px;
+    --baseline-large: 22px;
+  }
+  
+  .rhythm-relaxed > *,
+  .rhythm-luxurious > * {
+    margin-bottom: var(--rhythm-base); /* Reduce excessive spacing */
+  }
+}
+
+@media (min-width: 32rem) and (max-width: 47.9375rem) { /* Tablet */
+  :root {
+    --baseline-unit: 22px;
+    --baseline-small: 20px;
+    --baseline-large: 26px;
+  }
+}
+
+@media (min-width: 77.625rem) { /* Desktop */
+  :root {
+    --baseline-unit: 28px;
+    --baseline-small: 24px;
+    --baseline-large: 32px;
+    --baseline-display: 36px;
+  }
+}
+
+@media (min-width: 120rem) { /* Large Desktop */
+  :root {
+    --baseline-unit: 32px;
+    --baseline-small: 28px;
+    --baseline-large: 36px;
+    --baseline-display: 40px;
+  }
+}
+
+/* ================================
+   ACCESSIBILITY ENHANCEMENTS
+   ================================ */
+
+/* Respect user preferences for motion */
+@media (prefers-reduced-motion: reduce) {
+  .weight-feather,
+  .weight-light,
+  .weight-normal,
+  .weight-medium,
+  .weight-bold,
+  .weight-heavy {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* High contrast adjustments */
+@media (prefers-contrast: high) {
+  .weight-feather,
+  .weight-light {
+    opacity: 0.8; /* Increase minimum opacity */
+  }
+  
+  .debug-baseline::before,
+  .debug-golden::after {
+    display: none; /* Remove debug overlays */
+  }
+}
+
+/* Print rhythm optimizations */
+@media print {
+  :root {
+    --baseline-unit: 14pt;
+    --rhythm-base: 14pt;
+  }
+  
+  .heading-rhythm h1 { page-break-after: avoid; }
+  .heading-rhythm h2 { page-break-after: avoid; }
+  .heading-rhythm h3 { page-break-after: avoid; }
+  
+  .rhythm-container > * {
+    page-break-inside: avoid;
+  }
+}
+
+/* ================================
+   ANIMATION TIMING UTILITIES
+   ================================ */
+
+/* Rhythm-based animation durations */
+.duration-rhythm-eighth { transition-duration: 75ms; }   /* 1/8 beat */
+.duration-rhythm-quarter { transition-duration: 150ms; } /* 1/4 beat */
+.duration-rhythm-half { transition-duration: 300ms; }    /* 1/2 beat */
+.duration-rhythm-base { transition-duration: 600ms; }    /* Full beat */
+.duration-rhythm-double { transition-duration: 1200ms; } /* Double beat */
+
+/* Musical timing curves */
+.ease-rhythm { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+.ease-staccato { transition-timing-function: cubic-bezier(0.4, 0, 0.6, 1); }
+.ease-legato { transition-timing-function: cubic-bezier(0.2, 0, 0.2, 1); }

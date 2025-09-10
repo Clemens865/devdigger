@@ -1,0 +1,834 @@
+/* Data Visualization Styles - Light Theme Optimized */
+
+/* Linear Progress Styles */
+.linear-progress-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.progress-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.linear-progress-track {
+  position: relative;
+  height: 8px;
+  background: linear-gradient(to right, #f9fafb, #f3f4f6);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.linear-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  border-radius: 4px;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.linear-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+}
+
+.progress-segments {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.segment-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.progress-value {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  text-align: right;
+}
+
+/* Circular Progress Styles */
+.circular-progress-container {
+  position: relative;
+  display: inline-block;
+}
+
+.circular-progress-svg {
+  transform: rotate(-90deg);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.progress-track {
+  fill: none;
+  stroke: #f3f4f6;
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+.progress-circle {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.3));
+}
+
+.circular-progress-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.progress-percentage {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1;
+}
+
+.progress-label-small {
+  font-size: 11px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+/* Step Progress Styles */
+.step-progress-container {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.step-progress-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.step-node {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.step-node.active {
+  animation: pulse 2s infinite;
+}
+
+.step-node.completed {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.step-connector {
+  flex: 1;
+  height: 4px;
+  background: #e5e7eb;
+  margin: 0 -3px;
+  border-radius: 2px;
+  transition: background-color 0.5s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.step-connector.completed {
+  background: linear-gradient(90deg, #10b981, #059669);
+}
+
+.step-labels {
+  display: flex;
+  justify-content: space-between;
+}
+
+.step-label {
+  font-size: 12px;
+  color: #6b7280;
+  text-align: center;
+  flex: 1;
+  transition: color 0.3s ease;
+}
+
+.step-label.active {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+/* Wave Progress Styles */
+.wave-progress-container {
+  position: relative;
+  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.wave-label {
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  z-index: 3;
+}
+
+.wave-container {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.wave-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.wave-path {
+  animation: wave-motion 3s ease-in-out infinite;
+}
+
+.wave-percentage {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  z-index: 3;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Health Indicator Styles */
+.health-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.health-indicator:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.health-icon {
+  font-size: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.health-content {
+  flex: 1;
+}
+
+.health-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  line-height: 1.2;
+}
+
+.health-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-top: 2px;
+}
+
+.health-details {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.health-pulse {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: health-pulse 2s infinite;
+}
+
+/* Sparkline Styles */
+.sparkline {
+  display: block;
+}
+
+.sparkline-path {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+  animation: draw-line 1s ease-out;
+}
+
+/* Bar Chart Styles */
+.bar-chart {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  height: 100%;
+  gap: 8px;
+}
+
+.bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  max-width: 60px;
+}
+
+.bar {
+  width: 100%;
+  min-height: 4px;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(to top, #3b82f6, #60a5fa);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: bar-grow 0.8s ease-out;
+  position: relative;
+}
+
+.bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    transparent,
+    rgba(255, 255, 255, 0.2)
+  );
+  border-radius: 4px 4px 0 0;
+}
+
+.bar-label {
+  font-size: 11px;
+  color: #6b7280;
+  margin-top: 8px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.bar-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  margin-top: 4px;
+}
+
+/* Donut Chart Styles */
+.donut-chart-container {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.donut-chart {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.donut-segment {
+  transition: opacity 0.3s ease;
+  animation: donut-draw 1s ease-out;
+}
+
+.donut-segment:hover {
+  opacity: 0.8;
+}
+
+.donut-total {
+  font-size: 24px;
+  font-weight: 700;
+  fill: #1f2937;
+}
+
+.donut-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.legend-label {
+  color: #374151;
+  font-weight: 500;
+}
+
+.legend-value {
+  color: #6b7280;
+  font-weight: 600;
+  margin-left: auto;
+}
+
+/* Animated Number Styles */
+.animated-number {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #ffffff, #f8fafc);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.number-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1f2937;
+  font-variant-numeric: tabular-nums;
+}
+
+.trend-indicator {
+  font-size: 18px;
+  font-weight: 600;
+  animation: trend-bounce 0.5s ease-out;
+}
+
+.target-indicator {
+  font-size: 12px;
+  color: #6b7280;
+  background: rgba(0, 0, 0, 0.02);
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+/* Network Graph Styles */
+.network-graph {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.network-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.network-connection {
+  stroke: #d1d5db;
+  stroke-width: 2;
+  stroke-dasharray: 4 4;
+  animation: connection-pulse 3s infinite;
+}
+
+.network-node {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.network-node:hover .node-circle {
+  r: 12;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
+}
+
+.node-circle {
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.1));
+}
+
+.node-label {
+  font-size: 11px;
+  font-weight: 600;
+  fill: #374151;
+  text-anchor: middle;
+}
+
+/* KPI Card Styles */
+.kpi-card {
+  padding: 20px;
+  background: linear-gradient(135deg, #ffffff, #f8fafc);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-top: 4px solid #3b82f6;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.kpi-header {
+  margin-bottom: 12px;
+}
+
+.kpi-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.kpi-value {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.kpi-change {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.kpi-change.positive {
+  color: #10b981;
+}
+
+.kpi-change.negative {
+  color: #ef4444;
+}
+
+.change-indicator {
+  font-size: 16px;
+}
+
+/* Heatmap Styles */
+.heatmap {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.heatmap-grid {
+  display: inline-block;
+}
+
+.heatmap-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.heatmap-row-label {
+  font-size: 12px;
+  color: #6b7280;
+  width: 80px;
+  text-align: right;
+  margin-right: 8px;
+  font-weight: 500;
+}
+
+.heatmap-cell {
+  width: 24px;
+  height: 24px;
+  margin-right: 2px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.heatmap-cell:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cell-value {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.heatmap-x-labels {
+  display: flex;
+  margin-top: 8px;
+  margin-left: 88px;
+}
+
+.heatmap-x-label {
+  font-size: 12px;
+  color: #6b7280;
+  width: 26px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Performance Gauge Styles */
+.performance-gauge {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  text-align: center;
+}
+
+.gauge-container {
+  position: relative;
+  display: inline-block;
+}
+
+.gauge-svg {
+  width: 200px;
+  height: 120px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.gauge-track {
+  stroke-linecap: round;
+}
+
+.gauge-fill {
+  stroke-linecap: round;
+  transition: stroke-dasharray 1.5s ease-out;
+}
+
+.gauge-needle {
+  stroke-linecap: round;
+  transition: all 1.5s ease-out;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+.gauge-value {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.gauge-label {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Animations */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes wave-motion {
+  0%, 100% { d: path("M0,75 Q25,70 50,75 T100,75 V100 H0 Z"); }
+  50% { d: path("M0,75 Q25,80 50,75 T100,75 V100 H0 Z"); }
+}
+
+@keyframes health-pulse {
+  0%, 100% { opacity: 1; transform: translateY(-50%) scale(1); }
+  50% { opacity: 0.6; transform: translateY(-50%) scale(1.2); }
+}
+
+@keyframes draw-line {
+  0% { stroke-dasharray: 0 1000; }
+  100% { stroke-dasharray: 1000 0; }
+}
+
+@keyframes bar-grow {
+  0% { height: 0; }
+  100% { height: var(--final-height); }
+}
+
+@keyframes donut-draw {
+  0% { opacity: 0; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes trend-bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-3px); }
+  60% { transform: translateY(-1px); }
+}
+
+@keyframes connection-pulse {
+  0%, 100% { stroke-opacity: 0.3; }
+  50% { stroke-opacity: 0.8; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .donut-chart-container {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .step-progress-line {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .step-connector {
+    display: none;
+  }
+  
+  .kpi-value {
+    font-size: 24px;
+  }
+  
+  .heatmap-row-label {
+    width: 60px;
+    font-size: 10px;
+  }
+  
+  .heatmap-cell {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .gauge-svg {
+    width: 160px;
+    height: 96px;
+  }
+}
+
+/* Dark mode support (if needed) */
+@media (prefers-color-scheme: dark) {
+  .linear-progress-container,
+  .step-progress-container,
+  .wave-progress-container,
+  .health-indicator,
+  .bar-chart,
+  .donut-chart-container,
+  .animated-number,
+  .network-graph,
+  .kpi-card,
+  .heatmap,
+  .performance-gauge {
+    background: rgba(17, 24, 39, 0.9);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .progress-label,
+  .health-label,
+  .kpi-title,
+  .gauge-label {
+    color: #d1d5db;
+  }
+  
+  .progress-percentage,
+  .health-value,
+  .number-value,
+  .kpi-value,
+  .gauge-value {
+    color: #f9fafb;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .linear-progress-track,
+  .progress-track {
+    stroke: #000000;
+    background: #ffffff;
+  }
+  
+  .linear-progress-fill,
+  .progress-circle {
+    background: #0000ff;
+    stroke: #0000ff;
+  }
+  
+  .step-node {
+    border-color: #000000;
+  }
+}

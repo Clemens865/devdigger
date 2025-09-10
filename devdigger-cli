@@ -1,0 +1,401 @@
+#!/usr/bin/env node
+
+/**
+ * DevDigger CLI - Direct integration with Claude Code/Flow
+ * 
+ * Usage:
+ *   devdigger search "react hooks"
+ *   devdigger code --language javascript
+ *   devdigger sources
+ *   devdigger stats
+ */
+
+const Database = require('better-sqlite3');
+const path = require('path');
+const os = require('os');
+const { program } = require('commander');
+// Chalk colors disabled for now
+const chalk = {
+  red: (s) => s,
+  green: (s) => s,
+  yellow: (s) => s,
+  cyan: (s) => s,
+  blue: (s) => s,
+  gray: (s) => s,
+  white: (s) => s
+};
+
+// Database path (uppercase folder name to match Electron app!)
+const DB_PATH = path.join(
+  os.homedir(),
+  'Library',
+  'Application Support',
+  'DevDigger',  // uppercase to match Electron app!
+  'devdigger.db'
+);
+
+class DevDiggerCLI {
+  constructor() {
+    this.db = null;
+  }
+
+  connect(readonly = true) {
+    try {
+      this.db = new Database(DB_PATH, { readonly });
+      return true;
+    } catch (error) {
+      console.error(chalk.red('❌ Failed to connect to DevDigger database'));
+      console.error(chalk.yellow('Make sure DevDigger has crawled some data first'));
+      return false;
+    }
+  }
+
+  search(query, options = {}) {
+    if (!this.connect()) return;
+
+    const limit = options.limit || 5;
+    const format = options.format || 'text';
+
+    const results = this.db.prepare(`
+      SELECT 
+        d.content,
+        s.url,
+        s.title
+      FROM documents d
+      JOIN sources s ON d.source_id = s.id
+      WHERE d.content LIKE ?
+      LIMIT ?
+    `).all(`%${query}%`, limit);
+
+    if (format === 'json') {
+      console.log(JSON.stringify(results, null, 2));
+    } else {
+      console.log(chalk.cyan(`\n🔍 Search Results for "${query}":\n`));
+      
+      if (results.length === 0) {
+        console.log(chalk.yellow('No results found'));
+      } else {
+        results.forEach((result, i) => {
+          console.log(chalk.green(`\n[${i + 1}] ${result.title || result.url}`));
+          console.log(chalk.gray(`URL: ${result.url}`));
+          console.log(chalk.white(result.content.substring(0, 200) + '...'));
+        });
+      }
+    }
+
+    this.db.close();
+  }
+
+  getCodeExamples(options = {}) {
+    if (!this.connect()) return;
+
+    let query = `
+      SELECT 
+        c.language,
+        c.code,
+        c.description,
+        s.url as source_url
+      FROM code_examples c
+      JOIN sources s ON c.source_id = s.id
+    `;
+
+    const params = [];
+    if (options.language) {
+      query += ` WHERE c.language = ?`;
+      params.push(options.language);
+    }
+
+    query += ` LIMIT ?`;
+    params.push(options.limit || 10);
+
+    const examples = this.db.prepare(query).all(...params);
+
+    if (options.format === 'json') {
+      console.log(JSON.stringify(examples, null, 2));
+    } else {
+      console.log(chalk.cyan(`\n💻 Code Examples${options.language ? ` (${options.language})` : ''}:\n`));
+      
+      if (examples.length === 0) {
+        console.log(chalk.yellow('No code examples found'));
+      } else {
+        examples.forEach((example, i) => {
+          console.log(chalk.green(`\n[${i + 1}] ${example.language}`));
+          console.log(chalk.gray(`Source: ${example.source_url}`));
+          if (example.description) {
+            console.log(chalk.white(example.description));
+          }
+          console.log(chalk.blue('```' + example.language));
+          console.log(example.code.substring(0, 300));
+          console.log(chalk.blue('```'));
+        });
+      }
+    }
+
+    this.db.close();
+  }
+
+  listSources(options = {}) {
+    if (!this.connect()) return;
+
+    let query = `
+      SELECT 
+        type,
+        url,
+        title,
+        crawl_status,
+        datetime(created_at) as created_at
+      FROM sources
+    `;
+
+    if (options.type) {
+      query += ` WHERE type = '${options.type}'`;
+    }
+
+    query += ` ORDER BY created_at DESC LIMIT ${options.limit || 20}`;
+
+    const sources = this.db.prepare(query).all();
+
+    if (options.format === 'json') {
+      console.log(JSON.stringify(sources, null, 2));
+    } else {
+      console.log(chalk.cyan('\n📚 Crawled Sources:\n'));
+      
+      if (sources.length === 0) {
+        console.log(chalk.yellow('No sources found'));
+      } else {
+        sources.forEach(source => {
+          const statusColor = source.crawl_status === 'completed' ? 'green' : 'yellow';
+          console.log(chalk.blue(`\n${source.title || source.url}`));
+          console.log(chalk.gray(`  Type: ${source.type} | Status: `) + chalk[statusColor](source.crawl_status));
+          console.log(chalk.gray(`  URL: ${source.url}`));
+          console.log(chalk.gray(`  Crawled: ${source.created_at}`));
+        });
+      }
+    }
+
+    this.db.close();
+  }
+
+  showStats(options = {}) {
+    if (!this.connect()) return;
+
+    const stats = {
+      sources: this.db.prepare('SELECT COUNT(*) as count FROM sources').get().count,
+      documents: this.db.prepare('SELECT COUNT(*) as count FROM documents').get().count,
+      code_examples: this.db.prepare('SELECT COUNT(*) as count FROM code_examples').get().count,
+      embedded_docs: this.db.prepare('SELECT COUNT(*) as count FROM documents WHERE embedding IS NOT NULL').get().count
+    };
+
+    if (options.format === 'json') {
+      console.log(JSON.stringify(stats, null, 2));
+    } else {
+      console.log(chalk.cyan('\n📊 DevDigger Database Statistics:\n'));
+      console.log(chalk.white(`  Sources:     ${chalk.green(stats.sources)}`));
+      console.log(chalk.white(`  Documents:   ${chalk.green(stats.documents)}`));
+      console.log(chalk.white(`  Code Examples: ${chalk.green(stats.code_examples)}`));
+      console.log(chalk.white(`  With Embeddings: ${chalk.green(stats.embedded_docs)}`));
+    }
+
+    this.db.close();
+  }
+
+  answer(question, options = {}) {
+    if (!this.connect()) return;
+
+    // Search for relevant documents
+    const docs = this.db.prepare(`
+      SELECT content FROM documents 
+      WHERE content LIKE ? 
+      LIMIT 5
+    `).all(`%${question}%`);
+
+    if (docs.length === 0) {
+      console.log(chalk.yellow('No relevant information found in DevDigger'));
+    } else {
+      console.log(chalk.cyan('\n🤖 Based on DevDigger knowledge:\n'));
+      console.log(chalk.gray('Context from crawled documentation:'));
+      
+      docs.forEach((doc, i) => {
+        console.log(chalk.white(`\n[${i + 1}] ${doc.content.substring(0, 300)}...`));
+      });
+
+      console.log(chalk.green('\n💡 Use this context to answer: ') + chalk.white(question));
+    }
+
+    this.db.close();
+  }
+}
+
+// CLI setup
+const cli = new DevDiggerCLI();
+
+program
+  .name('devdigger')
+  .description('DevDigger CLI - Query your local knowledge base')
+  .version('1.0.0');
+
+program
+  .command('search <query>')
+  .description('Search documents in DevDigger')
+  .option('-l, --limit <number>', 'limit results', '5')
+  .option('-f, --format <type>', 'output format (text/json)', 'text')
+  .action((query, options) => {
+    cli.search(query, options);
+  });
+
+program
+  .command('code')
+  .description('Find code examples')
+  .option('-l, --language <lang>', 'filter by language')
+  .option('--limit <number>', 'limit results', '10')
+  .option('-f, --format <type>', 'output format (text/json)', 'text')
+  .action((options) => {
+    cli.getCodeExamples(options);
+  });
+
+program
+  .command('sources')
+  .description('List crawled sources')
+  .option('-t, --type <type>', 'filter by type')
+  .option('--limit <number>', 'limit results', '20')
+  .option('-f, --format <type>', 'output format (text/json)', 'text')
+  .action((options) => {
+    cli.listSources(options);
+  });
+
+program
+  .command('stats')
+  .description('Show database statistics')
+  .option('-f, --format <type>', 'output format (text/json)', 'text')
+  .action((options) => {
+    cli.showStats(options);
+  });
+
+program
+  .command('answer <question>')
+  .description('Get context to answer a question')
+  .action((question, options) => {
+    cli.answer(question, options);
+  });
+
+program
+  .command('clean')
+  .description('Clean database (remove duplicates and empty content)')
+  .option('--dry-run', 'Show what would be cleaned without making changes')
+  .action((options) => {
+    const cli = new DevDiggerCLI();
+    const readOnly = options.dryRun ? true : false;
+    if (!cli.connect(readOnly)) return;  // Write mode for actual cleaning
+    
+    if (options.dryRun) {
+      console.log(chalk.cyan('\n🔍 Database Analysis:\n'));
+      
+      // Get basic stats
+      const stats = cli.db.prepare('SELECT COUNT(*) as count FROM sources').get();
+      const docStats = cli.db.prepare('SELECT COUNT(*) as count FROM documents').get();
+      
+      // Find duplicates
+      const dupDocs = cli.db.prepare(`
+        SELECT COUNT(*) as count FROM (
+          SELECT content FROM documents 
+          GROUP BY content 
+          HAVING COUNT(*) > 1
+        )
+      `).get().count;
+      
+      const dupSources = cli.db.prepare(`
+        SELECT COUNT(*) as count FROM (
+          SELECT url FROM sources 
+          GROUP BY url 
+          HAVING COUNT(*) > 1
+        )
+      `).get().count;
+      
+      const emptyDocs = cli.db.prepare('SELECT COUNT(*) as count FROM documents WHERE LENGTH(TRIM(content)) < 10').get().count;
+      const emptySources = cli.db.prepare(`
+        SELECT COUNT(*) as count FROM sources s 
+        LEFT JOIN documents d ON s.id = d.source_id 
+        WHERE d.id IS NULL
+      `).get().count;
+      
+      console.log(chalk.white(`  Total Sources: ${stats.count}`));
+      console.log(chalk.white(`  Total Documents: ${docStats.count}`));
+      console.log(chalk.yellow(`  Duplicate Documents: ${dupDocs}`));
+      console.log(chalk.yellow(`  Duplicate Sources: ${dupSources}`));
+      console.log(chalk.red(`  Empty Documents: ${emptyDocs}`));
+      console.log(chalk.red(`  Empty Sources: ${emptySources}`));
+      
+    } else {
+      console.log(chalk.cyan('\n🧹 Cleaning Database...\n'));
+      
+      // Remove duplicate documents
+      const beforeDocs = cli.db.prepare('SELECT COUNT(*) as count FROM documents').get().count;
+      cli.db.exec(`
+        DELETE FROM documents 
+        WHERE rowid NOT IN (
+          SELECT MIN(rowid) 
+          FROM documents 
+          GROUP BY content
+        )
+      `);
+      const afterDocs = cli.db.prepare('SELECT COUNT(*) as count FROM documents').get().count;
+      const removedDocs = beforeDocs - afterDocs;
+      
+      // Remove empty documents
+      const emptyResult = cli.db.prepare('DELETE FROM documents WHERE LENGTH(TRIM(content)) < 10').run();
+      
+      // Remove empty sources
+      const emptySourceResult = cli.db.prepare(`
+        DELETE FROM sources 
+        WHERE id NOT IN (SELECT DISTINCT source_id FROM documents)
+      `).run();
+      
+      // Vacuum database
+      cli.db.exec('VACUUM');
+      
+      console.log(chalk.green('✅ Cleanup Complete!\n'));
+      console.log(chalk.white(`  Duplicate Documents Removed: ${removedDocs}`));
+      console.log(chalk.white(`  Empty Documents Removed: ${emptyResult.changes}`));
+      console.log(chalk.white(`  Empty Sources Removed: ${emptySourceResult.changes}`));
+      
+      const finalStats = cli.db.prepare('SELECT COUNT(*) as count FROM sources').get();
+      const finalDocs = cli.db.prepare('SELECT COUNT(*) as count FROM documents').get();
+      console.log(chalk.cyan('\n📊 Final Statistics:'));
+      console.log(chalk.white(`  Sources: ${finalStats.count}`));
+      console.log(chalk.white(`  Documents: ${finalDocs.count}`));
+    }
+    
+    cli.db.close();
+  });
+
+// For direct Claude integration
+program
+  .command('claude-query <query>')
+  .description('Format output for Claude')
+  .action((query) => {
+    const cli = new DevDiggerCLI();
+    if (cli.connect()) {
+      const results = cli.db.prepare(`
+        SELECT content, url, title FROM documents d
+        JOIN sources s ON d.source_id = s.id
+        WHERE content LIKE ?
+        LIMIT 10
+      `).all(`%${query}%`);
+      
+      // Output in a format optimized for Claude
+      console.log(`<devdigger-context query="${query}">`);
+      results.forEach(r => {
+        console.log(`<document source="${r.url}" title="${r.title}">`);
+        console.log(r.content);
+        console.log('</document>');
+      });
+      console.log('</devdigger-context>');
+      
+      cli.db.close();
+    }
+  });
+
+program.parse();
+
+// Export for use as module
+module.exports = DevDiggerCLI;

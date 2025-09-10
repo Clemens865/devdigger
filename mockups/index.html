@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevDigger - Design Mockups</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            color: white;
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .mockups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .mockup-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .mockup-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        }
+
+        .mockup-preview {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        .preview-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, rgba(0,0,0,0.5), transparent);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+        }
+
+        .preview-title {
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .mockup-content {
+            padding: 2rem;
+        }
+
+        .mockup-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .mockup-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .mockup-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .mockup-features li {
+            padding: 0.25rem 0;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .mockup-features li::before {
+            content: "✓ ";
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        .view-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .view-button:hover {
+            transform: translateX(2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Specific preview backgrounds */
+        .gallery-preview {
+            background-image: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-demo {
+            text-align: center;
+            color: #333;
+        }
+
+        .gallery-demo h3 {
+            font-size: 1.8rem;
+            font-weight: 200;
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-accent {
+            color: #ff6b00;
+            font-weight: 300;
+        }
+
+        .oracle-preview {
+            background: radial-gradient(circle at 20% 30%, hsla(25, 100%, 50%, 0.1), transparent 50%),
+                        radial-gradient(circle at 80% 70%, hsla(271, 91%, 65%, 0.1), transparent 50%),
+                        #f8f6f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .oracle-demo {
+            text-align: center;
+            color: #333;
+            font-family: 'Crimson Text', serif;
+        }
+
+        .oracle-symbol {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, hsl(271, 91%, 65%), hsl(25, 100%, 50%));
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        .oracle-symbol::after {
+            content: '◉';
+            color: white;
+            font-size: 16px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .brutalist-preview {
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .brutalist-demo {
+            text-align: center;
+        }
+
+        .brutalist-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .brutalist-mark {
+            width: 30px;
+            height: 30px;
+            background: #000;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 0.9rem;
+            clip-path: polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%);
+        }
+
+        .brutalist-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #000;
+            text-transform: uppercase;
+        }
+
+        .terminal-line {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            background: #000;
+            color: #00ff41;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .mockups-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .mockup-preview {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">DevDigger Design Mockups</h1>
+            <p class="subtitle">Three distinct aesthetic approaches for the ultimate knowledge mining tool</p>
+        </header>
+
+        <div class="mockups-grid">
+            <!-- Mockup 1: Gallery Minimalism -->
+            <a href="mockup-1-gallery.html" class="mockup-card">
+                <div class="mockup-preview gallery-preview">
+                    <div class="gallery-demo">
+                        <h3>Excavate <span class="gallery-accent">Knowledge</span></h3>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">Gallery Minimalism</p>
+                    </div>
+                </div>
+                <div class="mockup-content">
+                    <h2 class="mockup-title">Gallery Minimalism</h2>
+                    <p class="mockup-description">
+                        Clean, sophisticated design inspired by contemporary art galleries. Emphasizes whitespace, elegant typography, and subtle interactions.
+                    </p>
+                    <ul class="mockup-features">
+                        <li>Ultra-minimal aesthetic with perfect typography</li>
+                        <li>Generous whitespace and breathing room</li>
+                        <li>Sophisticated progress visualizations</li>
+                        <li>Elegant hover states and transitions</li>
+                        <li>Professional color palette</li>
+                    </ul>
+                    <div class="view-button">
+                        View Mockup →
+                    </div>
+                </div>
+            </a>
+
+            <!-- Mockup 2: Oracle Mysticism -->
+            <a href="mockup-2-oracle.html" class="mockup-card">
+                <div class="mockup-preview oracle-preview">
+                    <div class="oracle-demo">
+                        <div class="oracle-symbol"></div>
+                        <h3 style="font-size: 1.5rem; margin: 0;">Divine Digital Archaeology</h3>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem; font-style: italic;">Oracle Mysticism</p>
+                    </div>
+                </div>
+                <div class="mockup-content">
+                    <h2 class="mockup-title">Oracle Mysticism</h2>
+                    <p class="mockup-description">
+                        Mystical and sophisticated interface that treats knowledge discovery as a sacred ritual. Warm colors, poetic language, and spiritual metaphors.
+                    </p>
+                    <ul class="mockup-features">
+                        <li>Mystical oracle theme with sacred geometry</li>
+                        <li>Warm amber and purple color palette</li>
+                        <li>Poetic interface language and messaging</li>
+                        <li>Ethereal animations and glow effects</li>
+                        <li>Spiritual metaphors for technical processes</li>
+                    </ul>
+                    <div class="view-button">
+                        View Mockup →
+                    </div>
+                </div>
+            </a>
+
+            <!-- Mockup 3: Technical Brutalism -->
+            <a href="mockup-3-brutalist.html" class="mockup-card">
+                <div class="mockup-preview brutalist-preview">
+                    <div class="brutalist-demo">
+                        <div class="brutalist-logo">
+                            <div class="brutalist-mark">DD</div>
+                            <div class="brutalist-text">DevDigger</div>
+                        </div>
+                        <div class="terminal-line">root@devdigger:~$ ./mine --target react.dev</div>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">Technical Brutalism</p>
+                    </div>
+                </div>
+                <div class="mockup-content">
+                    <h2 class="mockup-title">Technical Brutalism</h2>
+                    <p class="mockup-description">
+                        Raw, functional design emphasizing system architecture and technical precision. Terminal aesthetics, grid layouts, and engineering mindset.
+                    </p>
+                    <ul class="mockup-features">
+                        <li>Terminal-inspired interface design</li>
+                        <li>Monospace typography and technical language</li>
+                        <li>Grid-based layouts and system monitors</li>
+                        <li>Real-time logging and data visualization</li>
+                        <li>High contrast black/white/green palette</li>
+                    </ul>
+                    <div class="view-button">
+                        View Mockup →
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

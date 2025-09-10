@@ -1,0 +1,294 @@
+/* Gallery Minimalism Design System */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap');
+
+:root {
+  /* Gallery Minimalism Color Palette from Mockup 1 */
+  --primary: #ff6b00;
+  --primary-light: #ff8c00;
+  --text: #1a1a1a;
+  --text-light: #666;
+  --text-lighter: #999;
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --border: #e6e6e6;
+  --success: #10b981;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 200;
+  letter-spacing: -0.02em;
+}
+
+/* Gallery Header */
+.gallery-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 2rem 0;
+}
+
+.gallery-logo {
+  font-size: 1.25rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Gallery Navigation */
+.gallery-nav {
+  display: flex;
+  gap: 3rem;
+  list-style: none;
+}
+
+.gallery-nav-item {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-light);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.gallery-nav-item:hover {
+  color: var(--text);
+}
+
+.gallery-nav-item.active {
+  color: var(--text);
+}
+
+.gallery-nav-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 50%;
+}
+
+/* Status Indicator */
+.gallery-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-lighter);
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--success);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Mining Interface */
+.mining-interface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 3rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.gallery-label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-lighter);
+  margin-bottom: 1rem;
+}
+
+.gallery-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 0;
+  font-size: 1.125rem;
+  font-weight: 300;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s ease;
+  width: 100%;
+}
+
+.gallery-input:focus {
+  border-bottom-color: var(--text);
+}
+
+.gallery-input::placeholder {
+  color: var(--text-lighter);
+  font-weight: 300;
+}
+
+/* Gallery Button */
+.gallery-button {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  clip-path: polygon(0 0, 100% 0, 95% 100%, 0 100%);
+}
+
+.gallery-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+}
+
+.gallery-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Options */
+.gallery-option {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gallery-select {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  padding: 0.5rem 0;
+  color: var(--text-light);
+  font-size: 0.875rem;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Progress Line */
+.progress-line {
+  height: 1px;
+  background: var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
+}
+
+/* Metrics */
+.gallery-metric {
+  text-align: center;
+}
+
+.metric-value {
+  font-size: 2.5rem;
+  font-weight: 200;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.metric-value.accent {
+  color: var(--primary);
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-lighter);
+}
+
+/* Data Layers */
+.data-layer {
+  background: var(--surface);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 120px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.data-layer.active {
+  background: linear-gradient(180deg, rgba(255, 107, 0, 0.05), var(--surface));
+}
+
+.layer-bg {
+  position: absolute;
+  top: 0;
+  right: -20px;
+  font-size: 4rem;
+  color: rgba(0, 0, 0, 0.02);
+  font-weight: 100;
+  line-height: 1;
+  z-index: 0;
+}
+
+.layer-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-lighter);
+  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.layer-count {
+  font-size: 1.5rem;
+  font-weight: 200;
+  color: var(--text);
+  position: relative;
+  z-index: 1;
+}
+
+/* Oracle Message */
+.oracle-message {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  font-style: italic;
+  color: var(--text-light);
+  padding: 2rem;
+  border-top: 1px solid var(--border);
+}

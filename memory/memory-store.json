@@ -1,0 +1,10 @@
+{
+  "default": [
+    {
+      "key": "design-system/dataviz",
+      "value": "{\\components\\: {\\progress\\: [\\LinearProgress\\, \\CircularProgress\\, \\StepProgress\\, \\WaveProgress\\], \\status\\: [\\HealthIndicator\\, \\Sparkline\\, \\PerformanceGauge\\], \\charts\\: [\\BarChart\\, \\DonutChart\\, \\Heatmap\\], \\metrics\\: [\\AnimatedNumber\\, \\KPICard\\], \\special\\: [\\NetworkGraph\\]}, \\features\\: [\\Light theme optimized\\, \\Responsive design\\, \\Smooth animations\\, \\Accessibility support\\, \\Customizable colors\\, \\TypeScript types\\], \\files\\: [\\src/components/charts/DataViz.tsx\\, \\src/styles/dataviz.css\\, \\src/components/charts/DataVizDemo.tsx\\], \\usage\\: \\Import individual components from DataViz object for flexible visualization needs\\}",
+      "namespace": "default",
+      "timestamp": 1757456673904
+    }
+  ]
+}
