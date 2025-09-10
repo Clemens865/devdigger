@@ -73,3 +73,7 @@ test-*.ts
 
 # System metrics (auto-generated)
 .claude-flow/metrics/
+
+# Test/crawled documents - should not be in repository
+documents/
+mockups/
