@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain, shell, Menu, dialog } from 'electron';
 import { join } from 'path';
+import * as os from 'os';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import { DatabaseService } from './services/database';
 import { WebScraperService } from './services/webScraper';
@@ -187,6 +188,58 @@ async function initializeServices() {
     embedding.setOpenAIKey(apiKey);
     console.log('OpenAI API key loaded from settings');
   }
+  
+  // Initialize Enhanced Search System (with delay for database readiness)
+  try {
+    console.log('Waiting for database to be fully ready...');
+    await new Promise(resolve => setTimeout(resolve, 1000)); // 1 second delay
+    
+    enhancedSearchSystem = EnhancedSearchSystem.getInstance(
+      database,
+      vectorDb,
+      embedding,
+      { 
+        enableCache: true, 
+        enableCrossEncoder: true, 
+        enableContextualEmbeddings: true,
+        openAIKey: apiKey
+      }
+    );
+    await enhancedSearchSystem.initialize();
+    console.log('✓ Enhanced search system initialized successfully');
+    
+    // Warm up the system with a test query for better first search performance
+    setTimeout(async () => {
+      try {
+        await enhancedSearchSystem!.search('test', { limit: 1 });
+        console.log('Enhanced search system warmed up');
+      } catch (error) {
+        console.log('Search system warmup skipped (no documents yet)');
+      }
+    }, 5000);
+    
+    // Enable auto-cleanup for memory management
+    const totalMemory = os.totalmem();
+    const threshold = 80; // 80% memory threshold
+    setInterval(async () => {
+      const freeMemory = os.freemem();
+      const usedPercentage = ((totalMemory - freeMemory) / totalMemory) * 100;
+      
+      if (usedPercentage > threshold) {
+        console.log(`Memory usage ${usedPercentage.toFixed(1)}% exceeds threshold, triggering cleanup`);
+        if (enhancedSearchSystem) {
+          await enhancedSearchSystem.clearCaches();
+        }
+        if (global.gc) {
+          global.gc();
+        }
+      }
+    }, 60000); // Check every minute
+    
+  } catch (error) {
+    console.error('Failed to initialize enhanced search system:', error);
+    console.log('Continuing with fallback search functionality');
+  }
 }
 
 // IPC Handlers
@@ -211,7 +264,112 @@ function setupIpcHandlers() {
       );
       await enhancedSearchSystem.initialize();
     }
-    return enhancedSearchSystem.search(query, options);
+    
+    // Send progress updates to renderer
+    const startTime = Date.now();
+    mainWindow?.webContents.send('search:progress', {
+      stage: 'initializing',
+      progress: 0.1
+    });
+    
+    const results = await enhancedSearchSystem.search(query, options);
+    
+    // Send completion with metrics
+    mainWindow?.webContents.send('search:complete', {
+      duration: Date.now() - startTime,
+      resultCount: results.length,
+      cacheHit: results.some((r: any) => r.fromCache)
+    });
+    
+    return results;
+  });
+
+  // Configure search pipeline profile
+  ipcMain.handle('search:configure', async (_, config: any) => {
+    if (!enhancedSearchSystem) {
+      enhancedSearchSystem = EnhancedSearchSystem.getInstance(
+        database,
+        vectorDb,
+        embedding,
+        { enableCache: true, enableCrossEncoder: true, enableContextualEmbeddings: true }
+      );
+      await enhancedSearchSystem.initialize();
+    }
+    // Store configuration
+    if (config.profile) {
+      await database.setSetting('search_profile', config.profile);
+    }
+    if (config.enableReranking !== undefined) {
+      await database.setSetting('enable_reranking', config.enableReranking.toString());
+    }
+    if (config.enableContextual !== undefined) {
+      await database.setSetting('enable_contextual', config.enableContextual.toString());
+    }
+    return { success: true };
+  });
+
+  // Get search configuration
+  ipcMain.handle('search:getConfig', async () => {
+    const profile = await database.getSetting('search_profile') || 'balanced';
+    const enableReranking = (await database.getSetting('enable_reranking')) !== 'false';
+    const enableContextual = (await database.getSetting('enable_contextual')) !== 'false';
+    
+    return {
+      profile,
+      enableReranking,
+      enableContextual,
+      profiles: ['fast', 'balanced', 'accurate', 'research']
+    };
+  });
+
+  // Cross-encoder reranking
+  ipcMain.handle('search:rerank', async (_, query: string, results: any[]) => {
+    if (!enhancedSearchSystem) {
+      return results;
+    }
+    // This would use the cross-encoder service if available
+    return results;
+  });
+
+  // Contextual search with enhanced embeddings
+  ipcMain.handle('search:contextual', async (_, query: string, context?: any) => {
+    if (!enhancedSearchSystem) {
+      enhancedSearchSystem = EnhancedSearchSystem.getInstance(
+        database,
+        vectorDb,
+        embedding,
+        { enableCache: true, enableCrossEncoder: true, enableContextualEmbeddings: true }
+      );
+      await enhancedSearchSystem.initialize();
+    }
+    return enhancedSearchSystem.search(query, { ...context, useContextual: true });
+  });
+
+  // Get search performance metrics
+  ipcMain.handle('search:metrics', async () => {
+    if (enhancedSearchSystem) {
+      const stats = await enhancedSearchSystem.getStatistics();
+      return {
+        ...stats,
+        memoryUsage: process.memoryUsage(),
+        cacheHitRate: stats?.cacheHitRate || 0,
+        avgSearchTime: stats?.avgSearchTime || 0
+      };
+    }
+    return null;
+  });
+
+  ipcMain.handle('search:statistics', async () => {
+    if (enhancedSearchSystem) {
+      const stats = await enhancedSearchSystem.getStatistics();
+      return {
+        ...stats,
+        memoryUsage: process.memoryUsage(),
+        cacheHitRate: stats?.cacheHitRate || 0,
+        avgSearchTime: stats?.avgSearchTime || 0
+      };
+    }
+    return null;
   });
 
   ipcMain.handle('search:stats', async () => {
@@ -231,6 +389,22 @@ function setupIpcHandlers() {
     if (enhancedSearchSystem) {
       await enhancedSearchSystem.rebuildIndices();
     }
+  });
+
+  // Warm up models for better performance
+  ipcMain.handle('search:warmup', async () => {
+    if (!enhancedSearchSystem) {
+      enhancedSearchSystem = EnhancedSearchSystem.getInstance(
+        database,
+        vectorDb,
+        embedding,
+        { enableCache: true, enableCrossEncoder: true, enableContextualEmbeddings: true }
+      );
+      await enhancedSearchSystem.initialize();
+    }
+    // Warm up the models with a dummy query
+    await enhancedSearchSystem.search('test', { limit: 1 });
+    return { warmedUp: true };
   });
 
   ipcMain.handle('db:getSources', async (_, type?: string) => {
@@ -404,6 +578,82 @@ function setupIpcHandlers() {
   // Embedding operations
   ipcMain.handle('embedding:generateBatch', async (_, texts: string[]) => {
     return embedding.generateBatch(texts);
+  });
+
+  // Memory management handlers
+  ipcMain.handle('memory:usage', async () => {
+    const memUsage = process.memoryUsage();
+    const totalMemory = os.totalmem();
+    const freeMemory = os.freemem();
+    const usedMemory = totalMemory - freeMemory;
+    
+    return {
+      total: totalMemory,
+      used: usedMemory,
+      percentage: (usedMemory / totalMemory) * 100,
+      details: {
+        rss: memUsage.rss,
+        heapTotal: memUsage.heapTotal,
+        heapUsed: memUsage.heapUsed,
+        external: memUsage.external,
+        arrayBuffers: memUsage.arrayBuffers
+      }
+    };
+  });
+
+  ipcMain.handle('memory:cleanup', async (_, aggressive = false) => {
+    try {
+      // Clear search cache
+      if (enhancedSearchSystem) {
+        await enhancedSearchSystem.clearCaches();
+      }
+      
+      // Force garbage collection if available
+      if (global.gc) {
+        global.gc();
+      }
+      
+      // If aggressive, also clear vector database cache
+      if (aggressive && vectorDb) {
+        await vectorDb.clearCache();
+      }
+      
+      console.log('Memory cleanup completed');
+    } catch (error) {
+      console.error('Memory cleanup error:', error);
+      throw error;
+    }
+  });
+
+  // Auto-cleanup configuration
+  let autoCleanupInterval: NodeJS.Timeout | null = null;
+  
+  ipcMain.handle('memory:autoCleanup', async (_, enabled: boolean, threshold = 80) => {
+    if (autoCleanupInterval) {
+      clearInterval(autoCleanupInterval);
+      autoCleanupInterval = null;
+    }
+    
+    if (enabled) {
+      autoCleanupInterval = setInterval(async () => {
+        const totalMemory = os.totalmem();
+        const freeMemory = os.freemem();
+        const usedPercentage = ((totalMemory - freeMemory) / totalMemory) * 100;
+        
+        if (usedPercentage > threshold) {
+          console.log(`Memory usage ${usedPercentage.toFixed(1)}% exceeds threshold ${threshold}%, triggering cleanup`);
+          if (enhancedSearchSystem) {
+            await enhancedSearchSystem.clearCaches();
+          }
+          
+          if (global.gc) {
+            global.gc();
+          }
+        }
+      }, 60000); // Check every minute
+    }
+    
+    console.log(`Auto-cleanup ${enabled ? 'enabled' : 'disabled'} with threshold ${threshold}%`);
   });
 
   // System operations

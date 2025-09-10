@@ -85,6 +85,57 @@ contextBridge.exposeInMainWorld('electronAPI', {
   settings: {
     updated: () => 
       ipcRenderer.invoke('settings:updated')
+  },
+
+  // Enhanced search operations
+  search: {
+    enhanced: (query: string, options?: {
+      profile?: 'fast' | 'balanced' | 'accurate' | 'research';
+      limit?: number;
+      context?: any;
+      rerank?: boolean;
+      useCache?: boolean;
+    }) => ipcRenderer.invoke('search:enhanced', query, options),
+    
+    contextual: (query: string, context: any, options?: any) => 
+      ipcRenderer.invoke('search:contextual', query, context, options),
+    
+    configure: (config: any) => 
+      ipcRenderer.invoke('search:configure', config),
+    
+    getConfig: () => 
+      ipcRenderer.invoke('search:getConfig'),
+    
+    getStatistics: () => 
+      ipcRenderer.invoke('search:statistics'),
+    
+    clearCache: () => 
+      ipcRenderer.invoke('search:clearCache'),
+    
+    warmUp: () => 
+      ipcRenderer.invoke('search:warmUp'),
+    
+    onProgress: (callback: (data: any) => void) => {
+      ipcRenderer.on('search:progress', (_, data) => callback(data));
+      return () => ipcRenderer.removeAllListeners('search:progress');
+    },
+    
+    onComplete: (callback: (data: any) => void) => {
+      ipcRenderer.on('search:complete', (_, data) => callback(data));
+      return () => ipcRenderer.removeAllListeners('search:complete');
+    }
+  },
+
+  // Memory management
+  memory: {
+    getUsage: () => 
+      ipcRenderer.invoke('memory:usage'),
+    
+    cleanup: (aggressive?: boolean) => 
+      ipcRenderer.invoke('memory:cleanup', aggressive),
+    
+    setAutoCleanup: (enabled: boolean, threshold?: number) => 
+      ipcRenderer.invoke('memory:autoCleanup', enabled, threshold)
   }
 });
 
@@ -238,6 +289,33 @@ export interface IElectronAPI {
   claude: {
     exportToMCP: (data: any) => Promise<void>;
     syncWithFlow: (collections: any[]) => Promise<void>;
+  };
+  search: {
+    enhanced: (query: string, options?: {
+      profile?: 'fast' | 'balanced' | 'accurate' | 'research';
+      limit?: number;
+      context?: any;
+      rerank?: boolean;
+      useCache?: boolean;
+    }) => Promise<SearchResult[]>;
+    contextual: (query: string, context: any, options?: any) => Promise<SearchResult[]>;
+    configure: (config: any) => Promise<void>;
+    getConfig: () => Promise<any>;
+    getStatistics: () => Promise<any>;
+    clearCache: () => Promise<void>;
+    warmUp: () => Promise<void>;
+    onProgress: (callback: (data: any) => void) => () => void;
+    onComplete: (callback: (data: any) => void) => () => void;
+  };
+  memory: {
+    getUsage: () => Promise<{
+      total: number;
+      used: number;
+      percentage: number;
+      details: any;
+    }>;
+    cleanup: (aggressive?: boolean) => Promise<void>;
+    setAutoCleanup: (enabled: boolean, threshold?: number) => Promise<void>;
   };
 }
 
