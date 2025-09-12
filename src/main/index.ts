@@ -583,14 +583,35 @@ function setupIpcHandlers() {
   // Memory management handlers
   ipcMain.handle('memory:usage', async () => {
     const memUsage = process.memoryUsage();
-    const totalMemory = os.totalmem();
-    const freeMemory = os.freemem();
-    const usedMemory = totalMemory - freeMemory;
+    const totalSystemMemory = os.totalmem();
+    const processMemoryMB = memUsage.rss / (1024 * 1024);
+    const processMemoryGB = processMemoryMB / 1024;
+    
+    // Calculate reasonable thresholds for Electron app
+    const heapUtilization = (memUsage.heapUsed / memUsage.heapTotal) * 100;
     
     return {
-      total: totalMemory,
-      used: usedMemory,
-      percentage: (usedMemory / totalMemory) * 100,
+      // Process-specific memory info
+      process: {
+        rss: memUsage.rss,
+        rssMB: processMemoryMB,
+        rssGB: processMemoryGB,
+        heapUsed: memUsage.heapUsed,
+        heapTotal: memUsage.heapTotal,
+        heapUtilization: heapUtilization,
+        external: memUsage.external,
+        arrayBuffers: memUsage.arrayBuffers
+      },
+      // System context (for reference)
+      system: {
+        total: totalSystemMemory,
+        free: os.freemem(),
+        processPercentageOfSystem: (memUsage.rss / totalSystemMemory) * 100
+      },
+      // For UI display - focus on process health
+      total: memUsage.heapTotal,
+      used: memUsage.heapUsed,
+      percentage: heapUtilization,
       details: {
         rss: memUsage.rss,
         heapTotal: memUsage.heapTotal,

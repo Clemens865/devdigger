@@ -112,14 +112,14 @@ function SearchPage() {
       if (window.electronAPI.memory) {
         const usage = await window.electronAPI.memory.getUsage();
         setMemoryUsage({
-          percentage: usage.percentage,
-          used: usage.used,
-          total: usage.total
+          percentage: usage.percentage, // Now shows heap utilization
+          used: usage.process?.rssMB || usage.used,
+          total: usage.process?.rssGB || usage.total
         });
         
-        // Auto cleanup if memory usage is high
+        // Auto cleanup if heap utilization is high (85% of allocated heap)
         if (usage.percentage > 85) {
-          console.log('High memory usage detected, triggering cleanup');
+          console.log('High heap utilization detected, triggering cleanup');
           await window.electronAPI.memory.cleanup(false);
         }
       }
@@ -208,9 +208,12 @@ function SearchPage() {
     }
   };
 
-  const formatBytes = (bytes: number) => {
-    const gb = bytes / (1024 * 1024 * 1024);
-    return gb.toFixed(2) + ' GB';
+  const formatMemory = (mb: number) => {
+    if (mb < 1024) {
+      return mb.toFixed(1) + ' MB';
+    } else {
+      return (mb / 1024).toFixed(2) + ' GB';
+    }
   };
 
   return (
@@ -251,9 +254,9 @@ function SearchPage() {
               </div>
             </div>
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '0.875rem', color: '#666' }}>Memory</div>
+              <div style={{ fontSize: '0.875rem', color: '#666' }}>App Memory</div>
               <div style={{ fontSize: '1.25rem', fontWeight: 600, color: memoryUsage.percentage > 80 ? '#ef4444' : '#10b981' }}>
-                {memoryUsage.percentage.toFixed(1)}%
+                {formatMemory(memoryUsage.used)}
               </div>
             </div>
           </div>
@@ -463,9 +466,9 @@ function SearchPage() {
             </div>
             <div className="gallery-stat-card">
               <h3 style={{ fontSize: '2rem', fontWeight: 600, marginBottom: '0.5rem' }}>
-                {formatBytes(memoryUsage.used)}
+                {formatMemory(memoryUsage.used)}
               </h3>
-              <p style={{ color: '#666', fontSize: '0.875rem' }}>Memory Used</p>
+              <p style={{ color: '#666', fontSize: '0.875rem' }}>App Memory</p>
             </div>
           </div>
         </section>
